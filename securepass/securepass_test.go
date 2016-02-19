@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-func ExampleNewSecurepass() {
+func ExampleNewSecurePass() {
 	appid, appsecret, remote := "appid", "appsecret", "https://test-remote.securepass.net"
 	s, err := NewSecurePass(appid, appsecret, remote)
 	fmt.Println(err)
