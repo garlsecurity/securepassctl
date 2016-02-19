@@ -18,7 +18,7 @@ func ExampleNewSecurePass() {
 	// https://test-remote.securepass.net
 }
 
-func ExamplePing() {
+func ExampleSecurePass_Ping() {
 	appid := "fe2564e8d65d11e5972fde2f4665c1f2@login.farm"
 	appsecret := "dGFmR4RoWMnRxf1137fkXcVgvRnd1G1BAFzZS5sJJKUpKXQBFy"
 	s, err := NewSecurePass(appid, appsecret, DefaultRemote)
