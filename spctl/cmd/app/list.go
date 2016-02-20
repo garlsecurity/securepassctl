@@ -1,7 +1,12 @@
 package app
 
 import (
+	"fmt"
+	"log"
+
 	"github.com/codegangsta/cli"
+	"github.com/garlsecurity/go-securepass/securepass"
+	"github.com/garlsecurity/go-securepass/spctl/config"
 )
 
 func init() {
@@ -25,6 +30,39 @@ func init() {
 		})
 }
 
+// ActionList provides the app list command
 func ActionList(c *cli.Context) {
+	if len(c.Args()) != 0 {
+		log.Fatal("too many arguments")
+	}
 
+	s, err := securepass.NewSecurePass(config.Configuration.AppID,
+		config.Configuration.AppSecret, config.Configuration.Endpoint)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	resp, err := s.AppList(&securepass.ApplicationDescriptor{
+		Realm: c.String("realm"),
+	})
+	if err != nil {
+		log.Fatalf("error: %v", err)
+	}
+
+	if c.Bool("details") {
+		fmt.Printf("%-45s %-30s\n", "APP_ID", "LABEL")
+	}
+
+	for _, app := range resp.AppID {
+		if !c.Bool("details") {
+			fmt.Printf("%s\n", app)
+		} else {
+			r, e := s.AppInfo(app)
+			if e != nil {
+				log.Fatalf("couldn't retrieve details for '%s': %s",
+					app, err)
+			}
+			fmt.Printf("%-45s %-30s\n", app, r.Label)
+		}
+	}
 }
