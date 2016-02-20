@@ -4,6 +4,9 @@ go:
   - 1.5
   - 1.6
 
+matrix:
+  - fast_finish: true
+
 install:
   - export GOPATH=$HOME/gopath
   - export PATH=$PATH:$HOME/gopath/bin
