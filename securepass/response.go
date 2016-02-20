@@ -45,8 +45,8 @@ type PingResponse struct {
 // AppAddResponse describes the expected response from the
 // /api/v1/apps/add
 type AppAddResponse struct {
-	AppID     string `ini:"APP_ID"`
-	AppSecret string `ini:"APP_SECRET"`
+	AppID     string `json:"APP_ID"`
+	AppSecret string `json:"APP_SECRET"`
 	Response
 }
 
