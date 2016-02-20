@@ -131,8 +131,8 @@ func (s *SecurePass) AppInfo(app string) (*AppInfoResponse, error) {
 }
 
 // AppInfo represents /api/v1/apps/info
-func (s *SecurePass) AppAdd(app *ApplicationDescriptor) (*AppdAddResponse, error) {
-	var obj AppdAddResponse
+func (s *SecurePass) AppAdd(app *ApplicationDescriptor) (*AppAddResponse, error) {
+	var obj AppAddResponse
 
 	data := url.Values{}
 	data.Set("LABEL", app.Label)
