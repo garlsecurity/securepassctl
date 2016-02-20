@@ -82,6 +82,28 @@ func (s *SecurePass) NewRequest(method, path string, buf *bytes.Buffer) (*http.R
 	return req, nil
 }
 
+// DoRequest issues an HTTP request
+func (s *SecurePass) DoRequest(req *http.Request, obj APIResponse, expstatus int) error {
+	client := NewClient(nil)
+	resp, err := client.Do(req)
+	if err != nil {
+		return err
+	}
+	if resp.StatusCode != expstatus {
+		return fmt.Errorf("%s", resp.Status)
+	}
+	defer resp.Body.Close()
+
+	err = json.NewDecoder(resp.Body).Decode(obj)
+	if err != nil {
+		return err
+	}
+	if obj.ErrorCode() != 0 {
+		return fmt.Errorf("%d: %s", obj.ErrorCode(), obj.ErrorMessage())
+	}
+	return nil
+}
+
 // NewClient initialize http.Client with a certain http.Transport
 func NewClient(tr *http.Transport) *http.Client {
 	// Skip SSL certificate verification
@@ -91,62 +113,60 @@ func NewClient(tr *http.Transport) *http.Client {
 	return &http.Client{Transport: tr}
 }
 
-// AppInfo represents /api/v1/apps/info
+// AppInfo retrieves information on a SecurePass application
 func (s *SecurePass) AppInfo(app string) (*AppInfoResponse, error) {
 	var obj AppInfoResponse
-	client := NewClient(nil)
 
 	data := url.Values{}
 	if app != "" {
 		data.Set("APP_ID", app)
 	}
+
 	req, err := s.NewRequest("POST", "/api/v1/apps/info", bytes.NewBufferString(data.Encode()))
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("%s", resp.Status)
-	}
-	defer resp.Body.Close()
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
 
-	err = json.NewDecoder(resp.Body).Decode(&obj)
+// AppInfo represents /api/v1/apps/info
+func (s *SecurePass) AppAdd(app *ApplicationDescriptor) (*AppdAddResponse, error) {
+	var obj AppdAddResponse
+
+	data := url.Values{}
+	data.Set("LABEL", app.Label)
+	data.Set("WRITE", fmt.Sprintf("%v", app.Write))
+	data.Set("PRIVACY", fmt.Sprintf("%v", app.Privacy))
+	if app.AllowNetworkIPv4 != "" {
+		data.Set("ALLOW_NETWORK_IPv4", app.AllowNetworkIPv4)
+	}
+	if app.AllowNetworkIPv6 != "" {
+		data.Set("ALLOW_NETWORK_IPv6", app.AllowNetworkIPv6)
+	}
+	if app.Group != "" {
+		data.Set("GROUP", app.Group)
+	}
+	if app.Realm != "" {
+		data.Set("REALM", app.Realm)
+	}
+
+	req, err := s.NewRequest("POST", "/api/v1/apps/add", bytes.NewBufferString(data.Encode()))
 	if err != nil {
 		return nil, err
 	}
-	if obj.RC != 0 {
-		return &obj, fmt.Errorf("%v", obj.ErrorMsg)
-	}
-	return &obj, nil
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
 }
 
 // Ping reprenets the /api/v1/ping API call
 func (s *SecurePass) Ping() (*PingResponse, error) {
 	var obj PingResponse
-	client := NewClient(nil)
 
 	req, err := s.NewRequest("GET", "/api/v1/ping", nil)
 	if err != nil {
 		return nil, err
 	}
-	resp, err := client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("%s", resp.Status)
-	}
-	defer resp.Body.Close()
-
-	err = json.NewDecoder(resp.Body).Decode(&obj)
-	if err != nil {
-		return nil, err
-	}
-	if obj.RC != 0 {
-		return &obj, fmt.Errorf("%v", obj.ErrorMsg)
-	}
-	return &obj, nil
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
 }
