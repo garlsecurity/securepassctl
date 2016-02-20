@@ -130,7 +130,7 @@ func (s *SecurePass) AppInfo(app string) (*AppInfoResponse, error) {
 	return &obj, err
 }
 
-// AppInfo represents /api/v1/apps/info
+// AppAdd represents /api/v1/apps/add
 func (s *SecurePass) AppAdd(app *ApplicationDescriptor) (*AppAddResponse, error) {
 	var obj AppAddResponse
 

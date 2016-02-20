@@ -45,6 +45,7 @@ func init() {
 		})
 }
 
+// ActionAdd provides the add subcommand
 func ActionAdd(c *cli.Context) {
 	if len(c.Args()) != 1 {
 		log.Fatal("error: must specify a label")

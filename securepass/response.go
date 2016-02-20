@@ -25,10 +25,12 @@ type Response struct {
 	RC       int
 }
 
+// ErrorCode returns the API call's numeric return code
 func (r *Response) ErrorCode() int {
 	return r.RC
 }
 
+// ErrorMessage returns the API call's text message
 func (r *Response) ErrorMessage() string {
 	return r.ErrorMsg
 }
