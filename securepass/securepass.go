@@ -159,6 +159,23 @@ func (s *SecurePass) AppAdd(app *ApplicationDescriptor) (*AppAddResponse, error)
 	return &obj, err
 }
 
+// AppDel deletes an application from SecurePass
+func (s *SecurePass) AppDel(app string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	if app != "" {
+		data.Set("APP_ID", app)
+	}
+
+	req, err := s.NewRequest("POST", "/api/v1/apps/delete", bytes.NewBufferString(data.Encode()))
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 // AppList retrieves the list of applications available in SecurePass
 func (s *SecurePass) AppList(app *ApplicationDescriptor) (*AppListResponse, error) {
 	var obj AppListResponse
