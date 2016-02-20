@@ -23,8 +23,7 @@ func init() {
 
 // ActionInfo is the info subcommand
 func ActionInfo(c *cli.Context) {
-	const templ = `
-Label.................: {{.Label}}
+	const templ = `Label.................: {{.Label}}
 Realm.................: {{.Realm}}
 Restrict to group.....: {{.Group}}
 Permissions...........: {{.Write | permissions}}
