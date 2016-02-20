@@ -48,8 +48,8 @@ Privacy mode..........: {{.Privacy}}
 		log.Fatal(err)
 	}
 	resp, err := s.AppInfo(app)
-	if resp.RC != 0 {
-		log.Fatalf("error: %v", resp.ErrorMsg)
+	if err != nil {
+		log.Fatalf("error: %v", err)
 	}
 	report := template.Must(template.New("report").Funcs(template.FuncMap{"permissions": func(b bool) string {
 		if b {
