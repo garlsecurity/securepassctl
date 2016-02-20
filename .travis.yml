@@ -4,6 +4,16 @@ go:
   - 1.5
   - 1.6
 
+install:
+  - export GOPATH=$HOME/gopath
+  - export PATH=$PATH:$HOME/gopath/bin
+  - go get -u -v github.com/golang/lint/golint
+  - go get -u -v github.com/codegangsta/cli
+  - go get -u -v gopkg.in/ini.v1
+
 script:
-- go vet ./...
-- go test -cover -v ./...
+  - export GOPATH=$HOME/gopath
+  - export PATH=$HOME/gopath/bin:$PATH
+  - go vet ./...
+  - go test -cover -v ./...
+  - golint ./...
