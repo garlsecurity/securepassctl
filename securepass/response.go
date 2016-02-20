@@ -55,3 +55,9 @@ type AppInfoResponse struct {
 	ApplicationDescriptor
 	Response
 }
+
+// AppListResponse encapsulates the /api/v1/apps HTTP response
+type AppListResponse struct {
+	AppID []string `json:"APP_ID"`
+	Response
+}

@@ -159,6 +159,11 @@ func (s *SecurePass) AppAdd(app *ApplicationDescriptor) (*AppAddResponse, error)
 	return &obj, err
 }
 
+// AppList retrieves the list of applications available in SecurePass
+func (s *SecurePass) AppList() (*AppListResponse, error) {
+	return nil, nil
+}
+
 // Ping reprenets the /api/v1/ping API call
 func (s *SecurePass) Ping() (*PingResponse, error) {
 	var obj PingResponse

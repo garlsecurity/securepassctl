@@ -1,7 +1,11 @@
 package app
 
 import (
+	"log"
+
 	"github.com/codegangsta/cli"
+	"github.com/garlsecurity/go-securepass/securepass"
+	"github.com/garlsecurity/go-securepass/spctl/config"
 )
 
 func init() {
@@ -25,6 +29,17 @@ func init() {
 		})
 }
 
+// ActionList provides the app list command
 func ActionList(c *cli.Context) {
+	if len(c.Args()) != 0 {
+		log.Fatal("too many arguments")
+	}
 
+	s, err := securepass.NewSecurePass(config.Configuration.AppID,
+		config.Configuration.AppSecret, config.Configuration.Endpoint)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	s.AppList()
 }
