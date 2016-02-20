@@ -21,7 +21,7 @@ func init() {
 		})
 }
 
-// ActionInfo is the info subcommand
+// ActionInfo provides the info subcommand
 func ActionInfo(c *cli.Context) {
 	const templ = `Label.................: {{.Label}}
 Realm.................: {{.Realm}}
@@ -31,16 +31,10 @@ IPv4 Network ACL......: {{.AllowNetworkIPv4}}
 IPv6 Network ACL......: {{.AllowNetworkIPv6}}
 Privacy mode..........: {{.Privacy}}
 `
-	app := func() string {
-		switch len(c.Args()) {
-		case 0:
-			return ""
-		case 1:
-			return c.Args()[0]
-		}
-		log.Fatal("too many arguments")
-		return ""
-	}()
+	if len(c.Args()) != 1 {
+		log.Fatal("error: must specify a label")
+	}
+	app := c.Args()[0]
 	s, err := securepass.NewSecurePass(config.Configuration.AppID,
 		config.Configuration.AppSecret, config.Configuration.Endpoint)
 	if err != nil {
