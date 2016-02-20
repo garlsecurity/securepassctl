@@ -160,8 +160,20 @@ func (s *SecurePass) AppAdd(app *ApplicationDescriptor) (*AppAddResponse, error)
 }
 
 // AppList retrieves the list of applications available in SecurePass
-func (s *SecurePass) AppList() (*AppListResponse, error) {
-	return nil, nil
+func (s *SecurePass) AppList(app *ApplicationDescriptor) (*AppListResponse, error) {
+	var obj AppListResponse
+
+	data := url.Values{}
+	if app.Realm != "" {
+		data.Set("REALM", app.Realm)
+	}
+
+	req, err := s.NewRequest("POST", "/api/v1/apps/list", bytes.NewBufferString(data.Encode()))
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
 }
 
 // Ping reprenets the /api/v1/ping API call

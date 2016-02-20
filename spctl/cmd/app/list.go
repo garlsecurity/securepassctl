@@ -1,6 +1,7 @@
 package app
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/codegangsta/cli"
@@ -41,5 +42,27 @@ func ActionList(c *cli.Context) {
 		log.Fatal(err)
 	}
 
-	s.AppList()
+	resp, err := s.AppList(&securepass.ApplicationDescriptor{
+		Realm: c.String("realm"),
+	})
+	if err != nil {
+		log.Fatalf("error: %v", err)
+	}
+
+	if c.Bool("details") {
+		fmt.Printf("%-45s %-30s\n", "APP_ID", "LABEL")
+	}
+
+	for _, app := range resp.AppID {
+		if !c.Bool("details") {
+			fmt.Printf("%s\n", app)
+		} else {
+			r, e := s.AppInfo(app)
+			if e != nil {
+				log.Fatalf("couldn't retrieve details for '%s': %s",
+					app, err)
+			}
+			fmt.Printf("%-45s %-30s\n", app, r.Label)
+		}
+	}
 }
