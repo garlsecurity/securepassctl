@@ -20,7 +20,7 @@ import (
 	"log"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/go-securepass/securepass/spctl/config"
+	"github.com/garlsecurity/go-securepass/securepass/spctl/service"
 )
 
 // Command holds the ping command
@@ -35,7 +35,7 @@ var Command = cli.Command{
 
 // ActionPing is the ping command handler
 func ActionPing(c *cli.Context) {
-	resp, err := config.Service.Ping()
+	resp, err := service.Service.Ping()
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}

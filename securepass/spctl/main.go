@@ -7,12 +7,13 @@ import (
 
 	"github.com/codegangsta/cli"
 	"github.com/garlsecurity/go-securepass/securepass/spctl/cmd"
-	"github.com/garlsecurity/go-securepass/securepass/spctl/config"
+	"github.com/garlsecurity/go-securepass/securepass/spctl/service"
 )
 
 var (
 	// OptionDebug contains the --debug flag
 	OptionDebug bool
+	Version     string
 )
 
 func init() {
@@ -25,7 +26,7 @@ func init() {
 	SystemConfigFiles := []string{"/etc/securepass.conf",
 		"/usr/local/etc/securepass.conf",
 		filepath.Join(cwd, "securepass.conf")}
-	config.LoadConfiguration(SystemConfigFiles)
+	service.LoadConfiguration(SystemConfigFiles)
 }
 
 func main() {
@@ -33,7 +34,9 @@ func main() {
 	a.Name = "spctl"
 	a.Usage = "manage distributed identities"
 	a.Author = "Alessio Treglia"
+	a.Email = "alessio@debian.org"
 	a.Copyright = "Copyright © 2016 Alessio Treglia <alessio@debian.org>"
+	a.Version = Version
 	a.Flags = []cli.Flag{
 		cli.BoolFlag{
 			Name:        "debug, D",

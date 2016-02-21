@@ -6,7 +6,7 @@ import (
 
 	"github.com/codegangsta/cli"
 	"github.com/garlsecurity/go-securepass/securepass"
-	"github.com/garlsecurity/go-securepass/securepass/spctl/config"
+	"github.com/garlsecurity/go-securepass/securepass/spctl/service"
 )
 
 func init() {
@@ -36,7 +36,7 @@ func ActionList(c *cli.Context) {
 		log.Fatal("too many arguments")
 	}
 
-	resp, err := config.Service.AppList(&securepass.ApplicationDescriptor{
+	resp, err := service.Service.AppList(&securepass.ApplicationDescriptor{
 		Realm: c.String("realm"),
 	})
 	if err != nil {
@@ -51,7 +51,7 @@ func ActionList(c *cli.Context) {
 		if !c.Bool("details") {
 			fmt.Printf("%s\n", app)
 		} else {
-			r, e := config.Service.AppInfo(app)
+			r, e := service.Service.AppInfo(app)
 			if e != nil {
 				log.Fatalf("couldn't retrieve details for '%s': %s",
 					app, err)

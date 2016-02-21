@@ -6,7 +6,7 @@ import (
 	"text/template"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/go-securepass/securepass/spctl/config"
+	"github.com/garlsecurity/go-securepass/securepass/spctl/service"
 )
 
 func init() {
@@ -34,7 +34,7 @@ Privacy mode..........: {{.Privacy}}
 		log.Fatal("error: must specify a label")
 	}
 	app := c.Args()[0]
-	resp, err := config.Service.AppInfo(app)
+	resp, err := service.Service.AppInfo(app)
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}

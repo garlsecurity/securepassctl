@@ -5,7 +5,7 @@ import (
 
 	"github.com/codegangsta/cli"
 	"github.com/garlsecurity/go-securepass/securepass"
-	"github.com/garlsecurity/go-securepass/securepass/spctl/config"
+	"github.com/garlsecurity/go-securepass/securepass/spctl/service"
 )
 
 func init() {
@@ -52,7 +52,7 @@ func ActionAdd(c *cli.Context) {
 	}
 	label := c.Args()[0]
 
-	resp, err := config.Service.AppAdd(&securepass.ApplicationDescriptor{
+	resp, err := service.Service.AppAdd(&securepass.ApplicationDescriptor{
 		Label:            label,
 		Group:            c.String("group"),
 		Realm:            c.String("realm"),
