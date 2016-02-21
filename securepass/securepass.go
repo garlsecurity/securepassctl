@@ -176,6 +176,37 @@ func (s *SecurePass) AppDel(app string) (*Response, error) {
 	return &obj, err
 }
 
+// AppMod represents /api/v1/apps/modify
+func (s *SecurePass) AppMod(app_id string, app *ApplicationDescriptor) (*AppInfoResponse, error) {
+	var obj AppInfoResponse
+
+	data := url.Values{}
+	data.Set("APP_ID", app_id)
+	data.Set("WRITE", fmt.Sprintf("%v", app.Write))
+	data.Set("PRIVACY", fmt.Sprintf("%v", app.Privacy))
+	if app.Label != "" {
+		data.Set("LABEL", app.Label)
+	}
+	if app.AllowNetworkIPv4 != "" {
+		data.Set("ALLOW_NETWORK_IPv4", app.AllowNetworkIPv4)
+	}
+	if app.AllowNetworkIPv6 != "" {
+		data.Set("ALLOW_NETWORK_IPv6", app.AllowNetworkIPv6)
+	}
+	if app.Group != "" {
+		data.Set("GROUP", app.Group)
+	}
+
+	fmt.Println(data)
+
+	req, err := s.NewRequest("POST", "/api/v1/apps/modify", bytes.NewBufferString(data.Encode()))
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 // AppList retrieves the list of applications available in SecurePass
 func (s *SecurePass) AppList(app *ApplicationDescriptor) (*AppListResponse, error) {
 	var obj AppListResponse
