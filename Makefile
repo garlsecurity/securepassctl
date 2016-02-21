@@ -8,7 +8,7 @@ BUILD_DIR ?= build
 build: build/linux build/darwin build/windows
 
 $(BUILD_DIR)/%: build-deps deps
-	gox -os=$(subst build/,,$@) -output="$(BUILD_DIR)/{{.OS}}-{{.Arch}}/{{.Dir}}" ./securepass/spctl
+	gox -os=$(subst build/,,$@) -output="$(BUILD_DIR)/{{.OS}}/{{.Arch}}/{{.Dir}}" ./securepass/spctl
 
 build-deps:
 	go get github.com/mitchellh/gox
