@@ -177,11 +177,11 @@ func (s *SecurePass) AppDel(app string) (*Response, error) {
 }
 
 // AppMod represents /api/v1/apps/modify
-func (s *SecurePass) AppMod(app_id string, app *ApplicationDescriptor) (*AppInfoResponse, error) {
+func (s *SecurePass) AppMod(appID string, app *ApplicationDescriptor) (*AppInfoResponse, error) {
 	var obj AppInfoResponse
 
 	data := url.Values{}
-	data.Set("APP_ID", app_id)
+	data.Set("APP_ID", appID)
 	data.Set("WRITE", fmt.Sprintf("%v", app.Write))
 	data.Set("PRIVACY", fmt.Sprintf("%v", app.Privacy))
 	if app.Label != "" {
