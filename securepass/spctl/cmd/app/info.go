@@ -34,7 +34,7 @@ Privacy mode..........: {{.Privacy}}
 		log.Fatal("error: must specify a label")
 	}
 	app := c.Args()[0]
-	resp, err := config.Configuration.AppInfo(app)
+	resp, err := config.Service.AppInfo(app)
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}

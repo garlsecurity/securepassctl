@@ -31,7 +31,7 @@ func ActionDel(c *cli.Context) {
 	}
 	app := c.Args()[0]
 
-	if _, err := config.Configuration.AppDel(app); err != nil {
+	if _, err := config.Service.AppDel(app); err != nil {
 		log.Fatalf("error: %v", err)
 	}
 	log.Printf("App deleted: '%s'", app)

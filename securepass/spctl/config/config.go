@@ -9,7 +9,7 @@ import (
 
 var (
 	// Configuration holds the global settings
-	Configuration *securepass.SecurePass
+	Service *securepass.SecurePass
 )
 
 // LoadConfiguration reads configuration from files
@@ -22,8 +22,8 @@ func LoadConfiguration(conffiles []string) error {
 		}
 	}
 	section, _ := cfg.GetSection("default")
-	Configuration = &securepass.SecurePass{Endpoint: securepass.DefaultRemote}
-	if err := section.MapTo(Configuration); err != nil {
+	Service = &securepass.SecurePass{Endpoint: securepass.DefaultRemote}
+	if err := section.MapTo(Service); err != nil {
 		return err
 	}
 	return nil

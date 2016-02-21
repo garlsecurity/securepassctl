@@ -35,7 +35,7 @@ var Command = cli.Command{
 
 // ActionPing is the ping command handler
 func ActionPing(c *cli.Context) {
-	resp, err := config.Configuration.Ping()
+	resp, err := config.Service.Ping()
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}

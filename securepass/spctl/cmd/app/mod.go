@@ -55,7 +55,7 @@ func ActionMod(c *cli.Context) {
 		log.Fatal("error: must specify an app id")
 	}
 	app := c.Args()[0]
-	_, err := config.Configuration.AppMod(app, &securepass.ApplicationDescriptor{
+	_, err := config.Service.AppMod(app, &securepass.ApplicationDescriptor{
 		Label:            c.String("label"),
 		Group:            c.String("group"),
 		Realm:            c.String("realm"),

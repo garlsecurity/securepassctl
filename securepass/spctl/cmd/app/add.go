@@ -52,7 +52,7 @@ func ActionAdd(c *cli.Context) {
 	}
 	label := c.Args()[0]
 
-	resp, err := config.Configuration.AppAdd(&securepass.ApplicationDescriptor{
+	resp, err := config.Service.AppAdd(&securepass.ApplicationDescriptor{
 		Label:            label,
 		Group:            c.String("group"),
 		Realm:            c.String("realm"),
