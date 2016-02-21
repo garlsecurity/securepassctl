@@ -3,6 +3,7 @@ HARDWARE = $(shell uname -m)
 VERSION ?= 0.0.0
 BUILD_TAG ?= dev
 BUILD_DIR ?= build
+PATH := $(GOPATH)/bin:$(PATH)
 
 
 build: build/linux build/darwin build/windows
