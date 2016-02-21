@@ -6,7 +6,7 @@ import (
 
 	"github.com/codegangsta/cli"
 	"github.com/garlsecurity/go-securepass/securepass"
-	"github.com/garlsecurity/go-securepass/spctl/config"
+	"github.com/garlsecurity/go-securepass/securepass/spctl/config"
 )
 
 func init() {
