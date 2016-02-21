@@ -52,12 +52,7 @@ func ActionAdd(c *cli.Context) {
 	}
 	label := c.Args()[0]
 
-	s, err := securepass.NewSecurePass(config.Configuration.AppID,
-		config.Configuration.AppSecret, config.Configuration.Endpoint)
-	if err != nil {
-		log.Fatal(err)
-	}
-	resp, err := s.AppAdd(&securepass.ApplicationDescriptor{
+	resp, err := config.Configuration.AppAdd(&securepass.ApplicationDescriptor{
 		Label:            label,
 		Group:            c.String("group"),
 		Realm:            c.String("realm"),

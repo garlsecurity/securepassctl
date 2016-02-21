@@ -4,7 +4,6 @@ import (
 	"log"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/go-securepass/securepass"
 	"github.com/garlsecurity/go-securepass/securepass/spctl/config"
 )
 
@@ -32,13 +31,7 @@ func ActionDel(c *cli.Context) {
 	}
 	app := c.Args()[0]
 
-	s, err := securepass.NewSecurePass(config.Configuration.AppID,
-		config.Configuration.AppSecret, config.Configuration.Endpoint)
-	if err != nil {
-		log.Fatal(err)
-	}
-	_, err = s.AppDel(app)
-	if err != nil {
+	if _, err := config.Configuration.AppDel(app); err != nil {
 		log.Fatalf("error: %v", err)
 	}
 	log.Printf("App deleted: '%s'", app)

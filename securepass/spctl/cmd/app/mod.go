@@ -55,12 +55,7 @@ func ActionMod(c *cli.Context) {
 		log.Fatal("error: must specify an app id")
 	}
 	app := c.Args()[0]
-	s, err := securepass.NewSecurePass(config.Configuration.AppID,
-		config.Configuration.AppSecret, config.Configuration.Endpoint)
-	if err != nil {
-		log.Fatal(err)
-	}
-	_, err = s.AppMod(app, &securepass.ApplicationDescriptor{
+	_, err := config.Configuration.AppMod(app, &securepass.ApplicationDescriptor{
 		Label:            c.String("label"),
 		Group:            c.String("group"),
 		Realm:            c.String("realm"),

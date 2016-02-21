@@ -36,13 +36,7 @@ func ActionList(c *cli.Context) {
 		log.Fatal("too many arguments")
 	}
 
-	s, err := securepass.NewSecurePass(config.Configuration.AppID,
-		config.Configuration.AppSecret, config.Configuration.Endpoint)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	resp, err := s.AppList(&securepass.ApplicationDescriptor{
+	resp, err := config.Configuration.AppList(&securepass.ApplicationDescriptor{
 		Realm: c.String("realm"),
 	})
 	if err != nil {
@@ -57,7 +51,7 @@ func ActionList(c *cli.Context) {
 		if !c.Bool("details") {
 			fmt.Printf("%s\n", app)
 		} else {
-			r, e := s.AppInfo(app)
+			r, e := config.Configuration.AppInfo(app)
 			if e != nil {
 				log.Fatalf("couldn't retrieve details for '%s': %s",
 					app, err)

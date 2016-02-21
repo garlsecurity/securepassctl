@@ -25,25 +25,6 @@ type SecurePass struct {
 	Endpoint  string
 }
 
-// NewSecurePass makes and initialize a new SecurePass instance
-func NewSecurePass(appid, appsecret, remote string) (*SecurePass, error) {
-	u, err := url.Parse(remote)
-	if err != nil {
-		return nil, err
-	}
-	if !u.IsAbs() {
-		return nil, fmt.Errorf("'%s' is not an absolute URL", remote)
-	}
-	if u.Scheme != "https" {
-		return nil, fmt.Errorf("scheme of '%s' isn't 'https'", remote)
-	}
-
-	return &SecurePass{
-		AppID:     appid,
-		AppSecret: appsecret,
-		Endpoint:  remote}, nil
-}
-
 func (s *SecurePass) setupRequestFieds(req *http.Request) {
 	req.Header.Set("Accept", ContentType)
 	req.Header.Set("Content-Type", ContentType)

@@ -20,7 +20,6 @@ import (
 	"log"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/go-securepass/securepass"
 	"github.com/garlsecurity/go-securepass/securepass/spctl/config"
 )
 
@@ -36,12 +35,7 @@ var Command = cli.Command{
 
 // ActionPing is the ping command handler
 func ActionPing(c *cli.Context) {
-	s, err := securepass.NewSecurePass(config.Configuration.AppID,
-		config.Configuration.AppSecret, config.Configuration.Endpoint)
-	if err != nil {
-		log.Fatal(err)
-	}
-	resp, err := s.Ping()
+	resp, err := config.Configuration.Ping()
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}

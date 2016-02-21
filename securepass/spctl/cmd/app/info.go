@@ -6,7 +6,6 @@ import (
 	"text/template"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/go-securepass/securepass"
 	"github.com/garlsecurity/go-securepass/securepass/spctl/config"
 )
 
@@ -35,12 +34,7 @@ Privacy mode..........: {{.Privacy}}
 		log.Fatal("error: must specify a label")
 	}
 	app := c.Args()[0]
-	s, err := securepass.NewSecurePass(config.Configuration.AppID,
-		config.Configuration.AppSecret, config.Configuration.Endpoint)
-	if err != nil {
-		log.Fatal(err)
-	}
-	resp, err := s.AppInfo(app)
+	resp, err := config.Configuration.AppInfo(app)
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
