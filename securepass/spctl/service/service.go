@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	// Configuration holds the global settings
+	// Service holds the global settings
 	Service *securepass.SecurePass
 )
 

@@ -13,7 +13,8 @@ import (
 var (
 	// OptionDebug contains the --debug flag
 	OptionDebug bool
-	Version     string
+	// Version of spctl
+	Version string
 )
 
 func init() {
