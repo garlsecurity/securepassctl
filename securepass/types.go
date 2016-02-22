@@ -61,3 +61,23 @@ type AppListResponse struct {
 	AppID []string `json:"APP_ID"`
 	Response
 }
+
+// NSSConfig encapsulates the SecurePass's config section '[nss]'
+type NSSConfig struct {
+	Realm        string `ini:"realm"`
+	DefaultGid   int    `ini:"default_gid"`
+	DefaultHome  string `ini:"default_home"`
+	DefaultShell string `ini:"default_shell"`
+}
+
+// SSHConfig encapsulates the SecurePass's config section '[ssh]'
+type SSHConfig struct {
+	Root string `ini:"root"`
+}
+
+// GlobalConfig encapsulates the SecurePass's whole configuration
+type GlobalConfig struct {
+	SecurePass `ini:"default"`
+	NSSConfig  `ini:"nss"`
+	SSHConfig  `ini:"ssh"`
+}
