@@ -10,7 +10,7 @@ matrix:
 install:
   - export GOPATH=$HOME/gopath
   - export PATH=$PATH:$HOME/gopath/bin
-  - make deps
+  - make clean
 
 script:
   - export GOPATH=$HOME/gopath
