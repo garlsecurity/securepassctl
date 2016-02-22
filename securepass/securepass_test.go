@@ -34,8 +34,8 @@ func ExampleSecurePass_Ping() {
 	resp, err := testInstance.Ping()
 	fmt.Println(err)
 	fmt.Println(resp.IPVersion)
-	fmt.Println(resp.RC)
-	fmt.Println(resp.ErrorMsg)
+	fmt.Println(resp.ErrorCode())
+	fmt.Println(resp.ErrorMessage())
 	// Output:
 	// <nil>
 	// 4
