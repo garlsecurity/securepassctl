@@ -2,6 +2,8 @@ package securepass
 
 import (
 	"fmt"
+	"math/rand"
+	"time"
 )
 
 var SecurePassInst SecurePass
@@ -35,4 +37,36 @@ func ExampleSecurePass_Ping() {
 	// 4
 	// 0
 	//
+}
+
+func ExampleAppLifecycle() {
+	var (
+		resp         APIResponse
+		addResponse  *AppAddResponse
+		fixtureAppID string
+	)
+
+	app := fmt.Sprintf("test_fixture_%d_%d", time.Now().Unix(), rand.Int())
+	// Create a new app
+	addResponse, _ = SecurePassInst.AppAdd(&ApplicationDescriptor{
+		Label: app,
+	})
+	fixtureAppID = addResponse.AppID
+	fmt.Println(addResponse.ErrorCode())
+	fmt.Println(addResponse.ErrorMessage() == "")
+	// Check for its existence
+	resp, _ = SecurePassInst.AppInfo(fixtureAppID)
+	fmt.Println(resp.ErrorCode())
+	// Remove it
+	resp, _ = SecurePassInst.AppDel(fixtureAppID)
+	fmt.Println(resp.ErrorCode())
+	// Check whether it does not longer exist
+	resp, _ = SecurePassInst.AppInfo(fixtureAppID)
+	fmt.Println(resp.ErrorCode())
+	// Output:
+	// 0
+	// true
+	// 0
+	// 0
+	// 10
 }
