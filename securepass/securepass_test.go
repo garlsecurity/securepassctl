@@ -4,25 +4,28 @@ import (
 	"fmt"
 )
 
-func ExampleSecurePass() {
-	appid, appsecret, remote := "appid", "appsecret", "https://test-remote.securepass.net"
-	s := SecurePass{AppID: appid, AppSecret: appsecret, Endpoint: remote}
-	fmt.Println(s.AppID)
-	fmt.Println(s.AppSecret)
-	fmt.Println(s.Endpoint)
-	// Output:
-	// appid
-	// appsecret
-	// https://test-remote.securepass.net
-}
+var SecurePassInst SecurePass
 
-func ExampleSecurePass_Ping() {
-	s := SecurePass{
+func init() {
+	SecurePassInst = SecurePass{
 		AppID:     "ce64dc90d88b11e5b001de2f4665c1f2@ci.secure-pass.net",
 		AppSecret: "E2m6HawI743as61Kv0OhyPb6wAewXnwVkLLcF82rKOWe1SJ0Wd",
 		Endpoint:  DefaultRemote,
 	}
-	resp, err := s.Ping()
+}
+
+func ExampleSecurePass() {
+	fmt.Println(SecurePassInst.AppID)
+	fmt.Println(SecurePassInst.AppSecret)
+	fmt.Println(SecurePassInst.Endpoint)
+	// Output:
+	// ce64dc90d88b11e5b001de2f4665c1f2@ci.secure-pass.net
+	// E2m6HawI743as61Kv0OhyPb6wAewXnwVkLLcF82rKOWe1SJ0Wd
+	// https://beta.secure-pass.net
+}
+
+func ExampleSecurePass_Ping() {
+	resp, err := SecurePassInst.Ping()
 	fmt.Println(err)
 	fmt.Println(resp.IPVersion)
 	fmt.Println(resp.RC)
