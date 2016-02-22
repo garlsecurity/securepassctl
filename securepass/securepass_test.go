@@ -39,7 +39,7 @@ func ExampleSecurePass_Ping() {
 	//
 }
 
-func ExampleAppLifecycle() {
+func ExampleSecurePass_AppAdd() {
 	var (
 		resp         APIResponse
 		addResponse  *AppAddResponse
