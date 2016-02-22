@@ -15,15 +15,19 @@ build: build/linux build/darwin build/windows
 $(BUILD_DIR)/%: build-deps deps
 	$(GOX) -os=$(subst build/,,$@) -output="$(BUILD_DIR)/{{.OS}}/{{.Arch}}/{{.Dir}}" ./securepass/spctl
 
-build-deps:
+build-deps: build-deps-stamp
+build-deps-stamp:
 	go get github.com/mitchellh/gox
+	touch $@
 
-deps:
+deps: deps-stamp
+deps-stamp:
 	go get -u -v github.com/codegangsta/cli
 	go get -u -v gopkg.in/ini.v1
 	go get -u -v github.com/progrium/gh-release/...
 	go get -u -v github.com/golang/lint/golint
 	go get -d -v ./... || true
+	touch $@
 
 release: build
 	rm -rf release && mkdir release
@@ -31,13 +35,14 @@ release: build
 	tar -zcf release/$(NAME)_$(VERSION)_darwin_$(HARDWARE).tgz -C build/darwin $(NAME)
 	gh-release create garlsecurity/go-securepass $(VERSION) $(shell git rev-parse --abbrev-ref HEAD)
 
-test:
+test: deps
 	go vet ./...
 	go test -cover -v ./...
 	$(GOLINT) ./...
 
 clean:
 	rm -rf $(BUILD_DIR)/
+	rm -f build-deps-stamp check-deps-stamp deps-stamp
 
 
 .PHONY: build-deps release deps clean test
