@@ -31,6 +31,7 @@ func init() {
 }
 
 func main() {
+	args := handleCompatMode(os.Args)
 	a := cli.NewApp()
 	a.Name = "spctl"
 	a.Usage = "manage distributed identities"
@@ -47,5 +48,5 @@ func main() {
 	}
 	a.Commands = cmd.Commands
 
-	a.Run(os.Args)
+	a.Run(args)
 }
