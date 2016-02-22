@@ -6,7 +6,10 @@ import (
 	"time"
 )
 
-var testInstance SecurePass
+var (
+	testInstance SecurePass
+	appLabel     string
+)
 
 func init() {
 	testInstance = SecurePass{
@@ -14,6 +17,7 @@ func init() {
 		AppSecret: "E2m6HawI743as61Kv0OhyPb6wAewXnwVkLLcF82rKOWe1SJ0Wd",
 		Endpoint:  DefaultRemote,
 	}
+	appLabel = fmt.Sprintf("test_fixture_%d_%d", time.Now().Unix(), rand.Int())
 }
 
 func ExampleSecurePass() {
@@ -46,10 +50,9 @@ func ExampleSecurePass_AppAdd() {
 		fixtureAppID string
 	)
 
-	app := fmt.Sprintf("test_fixture_%d_%d", time.Now().Unix(), rand.Int())
 	// Create a new app
 	addResponse, _ = testInstance.AppAdd(&ApplicationDescriptor{
-		Label: app,
+		Label: appLabel,
 	})
 	fixtureAppID = addResponse.AppID
 	fmt.Println(addResponse.ErrorCode())
