@@ -4,11 +4,16 @@ VERSION ?= 0.0.0
 BUILD_TAG ?= dev
 BUILD_DIR ?= build
 
+CWD := $(shell pwd)
+GOPATH ?= $(CWD)/GOPATH
+GOX := $(GOPATH)/bin/gox
+GOLINT := $(GOPATH)/bin/golint
+
 
 build: build/linux build/darwin build/windows
 
 $(BUILD_DIR)/%: build-deps deps
-	gox -os=$(subst build/,,$@) -output="$(BUILD_DIR)/{{.OS}}/{{.Arch}}/{{.Dir}}" ./securepass/spctl
+	$(GOX) -os=$(subst build/,,$@) -output="$(BUILD_DIR)/{{.OS}}/{{.Arch}}/{{.Dir}}" ./securepass/spctl
 
 build-deps:
 	go get github.com/mitchellh/gox
@@ -29,7 +34,7 @@ release: build
 test: deps
 	go vet ./...
 	go test -cover -v ./...
-	golint ./...
+	$(GOLINT) ./...
 
 clean:
 	rm -rf $(BUILD_DIR)/
