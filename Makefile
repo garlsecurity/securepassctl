@@ -9,11 +9,12 @@ GOPATH ?= $(CWD)/GOPATH
 GOX := $(GOPATH)/bin/gox
 GOLINT := $(GOPATH)/bin/golint
 
+BUILD_OPTS += -output="$(BUILD_DIR)/{{.OS}}/{{.Arch}}/{{.Dir}}" ./securepass/spctl
 
 build: build/linux build/darwin build/windows
 
 $(BUILD_DIR)/%: build-deps deps
-	$(GOX) -os=$(subst build/,,$@) -output="$(BUILD_DIR)/{{.OS}}/{{.Arch}}/{{.Dir}}" ./securepass/spctl
+	$(GOX) -os=$(subst build/,,$@) $(BUILD_OPTS)
 
 build-deps: build-deps-stamp
 build-deps-stamp:
