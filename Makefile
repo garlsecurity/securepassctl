@@ -42,10 +42,10 @@ test: deps
 	$(GOLINT) ./...
 
 dist-clean: clean
-	rm -rf $(BUILD_DIR)/
+	rm -f build-deps-stamp check-deps-stamp deps-stamp
 
 clean:
-	rm -f build-deps-stamp check-deps-stamp deps-stamp
+	rm -rf $(BUILD_DIR)/
 
 
 .PHONY: build-deps release deps clean test
