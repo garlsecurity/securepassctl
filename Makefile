@@ -40,8 +40,10 @@ test: deps
 	go test -cover -v ./...
 	$(GOLINT) ./...
 
-clean:
+dist-clean: clean
 	rm -rf $(BUILD_DIR)/
+
+clean:
 	rm -f build-deps-stamp check-deps-stamp deps-stamp
 
 
