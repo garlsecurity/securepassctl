@@ -20,11 +20,13 @@ VERSION:
    0.0.0
    
 AUTHOR(S):
-   Alessio Treglia 
+   Alessio Treglia <alessio@debian.org> 
    
 COMMANDS:
    ping		ping a SecurePass's remote endpoint
    app		manage applications
+   config	configure SecurePass
+   logs		display SecurePass logs
    help, h	Shows a list of commands or help for one command
    
 GLOBAL OPTIONS:
@@ -34,6 +36,5 @@ GLOBAL OPTIONS:
    
 COPYRIGHT:
    Copyright © 2016 Alessio Treglia <alessio@debian.org>
-   
 
 ```
