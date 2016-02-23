@@ -63,10 +63,25 @@ func ActionConfig(c *cli.Context) {
 		}
 		writer = w
 	}
-	service.WriteConfiguration(writer,
-		c.String("appid"),
-		c.String("endpoint"),
-		c.String("appsecret"),
-		c.String("realm"),
-		c.String("root"))
+
+	s := service.Service
+	nss := service.NSSSettings
+	ssh := service.SSHSettings
+	if c.String("appid") != "" {
+		s.AppID = c.String("appid")
+	}
+	if c.String("endpoint") != "" {
+		s.Endpoint = c.String("endpoint")
+	}
+	if c.String("appsecret") != "" {
+		s.AppSecret = c.String("appsecret")
+	}
+	if c.String("realm") != "" {
+		nss.Realm = c.String("realm")
+	}
+	if c.String("root") != "" {
+		ssh.Root = c.String("root")
+	}
+
+	service.WriteConfiguration(writer, s, nss, ssh)
 }
