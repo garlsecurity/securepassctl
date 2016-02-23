@@ -1,6 +1,9 @@
 # go-securepass
 [![GoDoc](https://godoc.org/github.com/garlsecurity/go-securepass?status.svg)](https://godoc.org/github.com/garlsecurity/go-securepass) [![Travis-CI 
 Status](https://api.travis-ci.org/garlsecurity/go-securepass.png?branch=master)](http://travis-ci.org/#!/garlsecurity/go-securepass)
+[![Coverage](http://gocover.io/_badge/github.com/codegangsta/cli?0)](http://gocover.io/github.com/codegangsta/cli)
+
+
 Go (golang) port of the SecurePass tool
 
 # Usage
