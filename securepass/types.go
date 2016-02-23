@@ -62,6 +62,21 @@ type AppListResponse struct {
 	Response
 }
 
+// LogsResponse encapsulates SecurePass application's logs
+type LogsResponse struct {
+	Logs map[string]struct {
+		// SecurePass response is currently broken, this
+		// should be a time.Time object.
+		Timestamp string
+		UUID      string
+		Message   string
+		Level     int
+		App       string
+		Realm     string
+	}
+	Response
+}
+
 // NSSConfig encapsulates the SecurePass's config section '[nss]'
 type NSSConfig struct {
 	Realm        string `ini:"realm"`

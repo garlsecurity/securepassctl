@@ -205,6 +205,29 @@ func (s *SecurePass) AppList(app *ApplicationDescriptor) (*AppListResponse, erro
 	return &obj, err
 }
 
+// Logs retrieves application logs
+func (s *SecurePass) Logs(realm, start, end string) (*LogsResponse, error) {
+	var obj LogsResponse
+
+	data := url.Values{}
+	if realm != "" {
+		data.Set("REALM", realm)
+	}
+	if start != "" {
+		data.Set("START", start)
+	}
+	if end != "" {
+		data.Set("END", end)
+	}
+
+	req, err := s.NewRequest("POST", "/api/v1/logs/get", bytes.NewBufferString(data.Encode()))
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 // Ping reprenets the /api/v1/ping API call
 func (s *SecurePass) Ping() (*PingResponse, error) {
 	var obj PingResponse
