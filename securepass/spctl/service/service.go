@@ -19,41 +19,70 @@ var (
 
 // LoadConfiguration reads configuration from files
 func LoadConfiguration(conffiles []string) error {
-	cfg, _ := ini.Load([]byte("[default]\nAPP_ID=\nAPP_SECRET=\n[nss]\n\n[ssh]\n"))
-	for _, filename := range conffiles {
-		if fp, err := os.Open(filename); err == nil {
-			fp.Close()
-			cfg.Append(filename)
-		}
+	cfg := ini.Empty()
+	Service = &securepass.SecurePass{
+		Endpoint: securepass.DefaultRemote,
 	}
-	defaultSection, _ := cfg.GetSection("default")
-	nssSection, _ := cfg.GetSection("nss")
-	sshSection, _ := cfg.GetSection("ssh")
-	Service = &securepass.SecurePass{Endpoint: securepass.DefaultRemote}
 	NSSSettings = &securepass.NSSConfig{
 		DefaultGid:   100,
 		DefaultHome:  "/home",
 		DefaultShell: "/bin/bash",
 	}
 	SSHSettings = &securepass.SSHConfig{}
-	if err := defaultSection.MapTo(Service); err != nil {
-		return err
+
+	for _, filename := range conffiles {
+		if fp, err := os.Open(filename); err == nil {
+			fp.Close()
+			cfg.Append(filename)
+		}
 	}
-	if err := nssSection.MapTo(NSSSettings); err != nil {
-		return err
+
+	defaultSection, err := cfg.GetSection("default")
+	if err != nil {
+		defaultSection, _ = cfg.NewSection("default")
+		err = defaultSection.ReflectFrom(Service)
+		if err != nil {
+			panic(err)
+		}
+	} else {
+		if err = defaultSection.MapTo(Service); err != nil {
+			panic(err)
+		}
 	}
-	if err := sshSection.MapTo(SSHSettings); err != nil {
-		return err
+
+	nssSection, err := cfg.GetSection("nss")
+	if err != nil {
+		nssSection, _ = cfg.NewSection("nss")
+		err = nssSection.ReflectFrom(NSSSettings)
+		if err != nil {
+			panic(err)
+		}
+	} else {
+		if err = nssSection.MapTo(NSSSettings); err != nil {
+			panic(err)
+		}
 	}
+
+	sshSection, err := cfg.GetSection("ssh")
+	if err != nil {
+		sshSection, _ = cfg.NewSection("ssh")
+		err = sshSection.ReflectFrom(SSHSettings)
+		if err != nil {
+			panic(err)
+		}
+	} else {
+		if err = sshSection.MapTo(SSHSettings); err != nil {
+			panic(err)
+		}
+	}
+
 	return nil
 }
 
 // WriteConfiguration saves configuration to file
-func WriteConfiguration(writer io.Writer, appid, endpoint, appsecret, realm, root string) (int64, error) {
+func WriteConfiguration(writer io.Writer, s *securepass.SecurePass, nss *securepass.NSSConfig, ssh *securepass.SSHConfig) (int64, error) {
 	globalConfig := securepass.GlobalConfig{
-		*Service,
-		*NSSSettings,
-		*SSHSettings,
+		*s, *nss, *ssh,
 	}
 
 	cfg := ini.Empty()
