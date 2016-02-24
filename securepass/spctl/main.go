@@ -31,10 +31,41 @@ func init() {
 }
 
 func main() {
+	cli.AppHelpTemplate = `Usage: {{if .UsageText}}{{.UsageText}}{{else}}{{.HelpName}} {{if .Flags}}[global options]{{end}}{{if .Commands}} command [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}{{end}}
+{{.Usage}}
+  {{if .Flags}}
+  {{range .Flags}}{{.}}
+  {{end}}{{end}}{{if .Commands}}
+Commands:
+    {{range .Commands}}{{join .Names ", "}}{{ "\t" }}{{.Usage}}
+    {{end}}{{end}}
+
+spctl home page: <https://github.com/garlsecurity/go-securepass>
+SecurePass online help: <http://www.secure-pass.net/integration-guides-examples/>
+Report bugs to <https://github.com/garlsecurity/go-securepass/issues>
+`
+	cli.CommandHelpTemplate = `Usage: {{.HelpName}}{{if .Flags}} [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}
+{{.Usage}}
+  {{if .Flags}}
+  {{range .Flags}}{{.}}
+  {{end}}{{end}}{{if .Subcommands}}
+Commands:
+    {{range .Subcommands}}{{join .Names ", "}}{{ "\t" }}{{.Usage}}
+    {{end}}{{end}}
+`
+	cli.SubcommandHelpTemplate = `Usage: {{.HelpName}}{{if .Flags}} [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}
+{{.Usage}}
+  {{if .Flags}}
+  {{range .Flags}}{{.}}
+  {{end}}{{end}}{{if .Commands}}
+Commands:
+    {{range .Commands}}{{join .Names ", "}}{{ "\t" }}{{.Usage}}
+    {{end}}{{end}}
+`
 	args := handleCompatMode(os.Args)
 	a := cli.NewApp()
 	a.Name = "spctl"
-	a.Usage = "manage distributed identities"
+	a.Usage = "Manage distributed identities."
 	a.Author = "Alessio Treglia"
 	a.Email = "alessio@debian.org"
 	a.Copyright = "Copyright © 2016 Alessio Treglia <alessio@debian.org>"
@@ -47,6 +78,5 @@ func main() {
 		},
 	}
 	a.Commands = cmd.Commands
-
 	a.Run(args)
 }
