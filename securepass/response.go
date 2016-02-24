@@ -69,3 +69,9 @@ type UserListResponse struct {
 	Username []string
 	Response
 }
+
+// UserAuthResponse encapsulates the /api/v1/users/auth HTTP response
+type UserAuthResponse struct {
+	Authenticated bool
+	Response
+}
