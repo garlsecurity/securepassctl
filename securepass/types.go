@@ -18,6 +18,22 @@ type ApplicationDescriptor struct {
 	Privacy          bool   `json:"privacy"`
 }
 
+// UserDescriptor defines the attributes of SecurePass users
+type UserDescriptor struct {
+	Username string
+	Name     string
+	Surname  string
+	Email    string
+	Mobile   string
+	Nin      string
+	Rfid     string
+	Manager  string
+	Type     string
+	Password string
+	Enabled  bool
+	Token    string
+}
+
 // Response is the base type for API calls responses
 type Response struct {
 	APIResponse
@@ -90,6 +106,18 @@ type LogsResponse struct {
 // GroupMemberResponse encapsulates whether a group belogs to a member
 type GroupMemberResponse struct {
 	Member bool
+	Response
+}
+
+// UserInfoResponse encapsulates the /api/v1/users/info HTTP response
+type UserInfoResponse struct {
+	UserDescriptor
+	Response
+}
+
+// UserListResponse encapsulates the /api/v1/users HTTP response
+type UserListResponse struct {
+	Username []string
 	Response
 }
 
