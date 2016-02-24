@@ -14,14 +14,14 @@ type ApplicationDescriptor struct {
 
 // UserDescriptor defines the attributes of SecurePass users
 type UserDescriptor struct {
-	Username string
-	Name     string
-	Surname  string
-	Email    string
-	Mobile   string
-	Nin      string
-	Rfid     string
-	Manager  string
+	Username string `json:"USERNAME"`
+	Name     string `json:"NAME"`
+	Surname  string `json:"SURNAME"`
+	Email    string `json:"EMAIL"`
+	Mobile   string `json:"MOBILE"`
+	Nin      string `json:"NIN"`
+	Rfid     string `json:"RFID"`
+	Manager  string `json:"MANAGER"`
 	Type     string
 	Password bool
 	Enabled  bool
