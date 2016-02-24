@@ -29,7 +29,7 @@ type UserDescriptor struct {
 	Rfid     string
 	Manager  string
 	Type     string
-	Password string
+	Password bool
 	Enabled  bool
 	Token    string
 }
