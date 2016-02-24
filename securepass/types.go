@@ -87,6 +87,12 @@ type LogsResponse struct {
 	Response
 }
 
+// GroupMemberResponse encapsulates whether a group belogs to a member
+type GroupMemberResponse struct {
+	Member bool
+	Response
+}
+
 // NSSConfig encapsulates the SecurePass's config section '[nss]'
 type NSSConfig struct {
 	Realm        string `ini:"realm"`

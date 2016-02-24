@@ -228,6 +228,26 @@ func (s *SecurePass) Logs(realm, start, end string) (*LogsResponse, error) {
 	return &obj, err
 }
 
+// GroupMember issues requests to /api/v1/groups/member
+func (s *SecurePass) GroupMember(user, group string) (*GroupMemberResponse, error) {
+	var obj GroupMemberResponse
+
+	data := url.Values{}
+	if user != "" {
+		data.Set("USERNAME", user)
+	}
+	if group != "" {
+		data.Set("GROUP", group)
+	}
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/member", bytes.NewBufferString(data.Encode()))
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 // Ping reprenets the /api/v1/ping API call
 func (s *SecurePass) Ping() (*PingResponse, error) {
 	var obj PingResponse
