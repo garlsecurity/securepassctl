@@ -70,6 +70,12 @@ type UserListResponse struct {
 	Response
 }
 
+// UserAddResponse encapsulates the /api/v1/users/add HTTP response
+type UserAddResponse struct {
+	Username string
+	Response
+}
+
 // UserAuthResponse encapsulates the /api/v1/users/auth HTTP response
 type UserAuthResponse struct {
 	Authenticated bool

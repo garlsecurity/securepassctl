@@ -296,6 +296,28 @@ func (s *SecurePass) UserAuth(username, secret string) (*UserAuthResponse, error
 	return &obj, err
 }
 
+// UserAdd issues requests to /api/v1/users/add
+func (s *SecurePass) UserAdd(user *UserDescriptor) (*UserAddResponse, error) {
+	var obj UserAddResponse
+
+	data := url.Values{}
+	data.Set("USERNAME", user.Username)
+	data.Set("NAME", user.Name)
+	data.Set("SURNAME", user.Surname)
+	data.Set("EMAIL", user.Email)
+	data.Set("MOBILE", user.Mobile)
+	data.Set("NIN", user.Nin)
+	data.Set("RFID", user.Rfid)
+	data.Set("MANAGER", user.Manager)
+
+	req, err := s.NewRequest("POST", "/api/v1/users/add", bytes.NewBufferString(data.Encode()))
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 // Ping reprenets the /api/v1/ping API call
 func (s *SecurePass) Ping() (*PingResponse, error) {
 	var obj PingResponse
