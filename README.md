@@ -9,32 +9,24 @@ Go (golang) port of the SecurePass tool
 
 # Usage
 ```console
-$ spctl --help
-NAME:
-   spctl - manage distributed identities
+Usage: spctl [global options] command [command options] [arguments...]
+Manage distributed identities.
+  
+  --debug, -D	enable debug output
+  --help, -h	show help
+  --version, -v	print the version
+  
+Commands:
+    ping		ping a SecurePass's remote endpoint
+    app			manage applications
+    config		configure SecurePass
+    group-member	test group membership
+    logs		display SecurePass logs
+    user		manage users
+    help, h		Shows a list of commands or help for one command
+    
 
-USAGE:
-   spctl [global options] command [command options] [arguments...]
-   
-VERSION:
-   0.0.0
-   
-AUTHOR(S):
-   Alessio Treglia <alessio@debian.org> 
-   
-COMMANDS:
-   ping		ping a SecurePass's remote endpoint
-   app		manage applications
-   config	configure SecurePass
-   logs		display SecurePass logs
-   help, h	Shows a list of commands or help for one command
-   
-GLOBAL OPTIONS:
-   --debug, -D		enable debug output
-   --help, -h		show help
-   --version, -v	print the version
-   
-COPYRIGHT:
-   Copyright © 2016 Alessio Treglia <alessio@debian.org>
-
+spctl home page: <https://github.com/garlsecurity/go-securepass>
+SecurePass online help: <http://www.secure-pass.net/integration-guides-examples/>
+Report bugs to <https://github.com/garlsecurity/go-securepass/issues>
 ```
