@@ -7,6 +7,7 @@ import (
 	"github.com/garlsecurity/go-securepass/securepass/spctl/cmd/groupmember"
 	"github.com/garlsecurity/go-securepass/securepass/spctl/cmd/logs"
 	"github.com/garlsecurity/go-securepass/securepass/spctl/cmd/ping"
+	"github.com/garlsecurity/go-securepass/securepass/spctl/cmd/user"
 )
 
 // Commands contains the app's commands
@@ -16,4 +17,5 @@ var Commands = []cli.Command{
 	config.Command,
 	groupmember.Command,
 	logs.Command,
+	user.Command,
 }

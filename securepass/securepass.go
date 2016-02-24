@@ -248,6 +248,38 @@ func (s *SecurePass) GroupMember(user, group string) (*GroupMemberResponse, erro
 	return &obj, err
 }
 
+// UserInfo issues requests to /api/v1/users/info
+func (s *SecurePass) UserInfo(username string) (*UserInfoResponse, error) {
+	var obj UserInfoResponse
+
+	data := url.Values{}
+	data.Set("USERNAME", username)
+
+	req, err := s.NewRequest("POST", "/api/v1/users/info", bytes.NewBufferString(data.Encode()))
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, nil
+}
+
+// UserList issues requests to /api/v1/users/list
+func (s *SecurePass) UserList(realm string) (*UserListResponse, error) {
+	var obj UserListResponse
+
+	data := url.Values{}
+	if realm != "" {
+		data.Set("REALM", realm)
+	}
+
+	req, err := s.NewRequest("POST", "/api/v1/users/list", bytes.NewBufferString(data.Encode()))
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 // Ping reprenets the /api/v1/ping API call
 func (s *SecurePass) Ping() (*PingResponse, error) {
 	var obj PingResponse
