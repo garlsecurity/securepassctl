@@ -62,18 +62,28 @@ type AppListResponse struct {
 	Response
 }
 
+// LogEntry is a SecurePass application's log entry
+type LogEntry struct {
+	// SecurePass response is currently broken, this
+	// should be a time.Time object.
+	Timestamp string
+	UUID      string
+	Message   string
+	Level     int
+	App       string
+	Realm     string
+}
+
+// LogEntriesByTimestamp sorts log entries by timestamp
+type LogEntriesByTimestamp []LogEntry
+
+func (l LogEntriesByTimestamp) Less(i, j int) bool { return l[i].Timestamp < l[j].Timestamp }
+func (l LogEntriesByTimestamp) Swap(i, j int)      { l[i], l[j] = l[j], l[i] }
+func (l LogEntriesByTimestamp) Len() int           { return len(l) }
+
 // LogsResponse encapsulates SecurePass application's logs
 type LogsResponse struct {
-	Logs map[string]struct {
-		// SecurePass response is currently broken, this
-		// should be a time.Time object.
-		Timestamp string
-		UUID      string
-		Message   string
-		Level     int
-		App       string
-		Realm     string
-	}
+	Logs map[string]LogEntry
 	Response
 }
 
