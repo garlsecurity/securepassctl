@@ -74,6 +74,13 @@ type LogEntry struct {
 	Realm     string
 }
 
+// LogEntriesByTimestamp sorts log entries by timestamp
+type LogEntriesByTimestamp []LogEntry
+
+func (l LogEntriesByTimestamp) Less(i, j int) bool { return l[i].Timestamp < l[j].Timestamp }
+func (l LogEntriesByTimestamp) Swap(i, j int)      { l[i], l[j] = l[j], l[i] }
+func (l LogEntriesByTimestamp) Len() int           { return len(l) }
+
 // LogsResponse encapsulates SecurePass application's logs
 type LogsResponse struct {
 	Logs map[string]LogEntry

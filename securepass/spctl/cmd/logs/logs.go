@@ -5,9 +5,11 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sort"
 	"strconv"
 
 	"github.com/codegangsta/cli"
+	"github.com/garlsecurity/go-securepass/securepass"
 	"github.com/garlsecurity/go-securepass/securepass/spctl/service"
 )
 
@@ -52,16 +54,22 @@ func ActionLogs(c *cli.Context) {
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
+
+	records := []securepass.LogEntry{}
+	for _, entry := range resp.Logs {
+		records = append(records, entry)
+	}
+	sort.Sort(securepass.LogEntriesByTimestamp(records))
 	if !c.Bool("csv") {
-		for tstamp, entry := range resp.Logs {
-			fmt.Printf("%-19s %s\n", tstamp, entry.Message)
+		for _, entry := range records {
+			fmt.Printf("%-19s %s\n", entry.Timestamp, entry.Message)
 		}
 	} else {
 		w := csv.NewWriter(os.Stdout)
 		defer w.Flush()
 		w.Write([]string{"timestamp", "uuid", "message", "realm", "app", "level"})
-		for tstamp, entry := range resp.Logs {
-			record := []string{tstamp, entry.UUID, entry.Message,
+		for _, entry := range records {
+			record := []string{entry.Timestamp, entry.UUID, entry.Message,
 				entry.Realm, entry.App, strconv.Itoa(entry.Level)}
 			if err := w.Write(record); err != nil {
 				log.Fatalln("error writing record to csv: ", err)
