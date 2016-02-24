@@ -260,7 +260,7 @@ func (s *SecurePass) UserInfo(username string) (*UserInfoResponse, error) {
 		return nil, err
 	}
 	err = s.DoRequest(req, &obj, 200)
-	return &obj, nil
+	return &obj, err
 }
 
 // UserList issues requests to /api/v1/users/list
@@ -273,6 +273,22 @@ func (s *SecurePass) UserList(realm string) (*UserListResponse, error) {
 	}
 
 	req, err := s.NewRequest("POST", "/api/v1/users/list", bytes.NewBufferString(data.Encode()))
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// UserAuth issues requests to /api/v1/users/auth
+func (s *SecurePass) UserAuth(username, secret string) (*UserAuthResponse, error) {
+	var obj UserAuthResponse
+
+	data := url.Values{}
+	data.Set("USERNAME", username)
+	data.Set("SECRET", secret)
+
+	req, err := s.NewRequest("POST", "/api/v1/users/auth", bytes.NewBufferString(data.Encode()))
 	if err != nil {
 		return nil, err
 	}
