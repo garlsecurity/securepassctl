@@ -324,6 +324,21 @@ func (s *SecurePass) UserAdd(user *UserDescriptor) (*UserAddResponse, error) {
 	return &obj, err
 }
 
+// UserDel deletes a user from SecurePass
+func (s *SecurePass) UserDel(username string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("USERNAME", username)
+
+	req, err := s.NewRequest("POST", "/api/v1/users/delete", bytes.NewBufferString(data.Encode()))
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 // Ping reprenets the /api/v1/ping API call
 func (s *SecurePass) Ping() (*PingResponse, error) {
 	var obj PingResponse
