@@ -4,8 +4,8 @@ import (
 	"log"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/go-securepass/securepass"
-	"github.com/garlsecurity/go-securepass/securepass/spctl/service"
+	"github.com/garlsecurity/securepassctl"
+	"github.com/garlsecurity/securepassctl/spctl/service"
 )
 
 func init() {
@@ -59,7 +59,7 @@ func ActionAdd(c *cli.Context) {
 	if c.Bool("debug") {
 		log.Println("Adding user", username)
 	}
-	_, err := service.Service.UserAdd(&securepass.UserDescriptor{
+	_, err := service.Service.UserAdd(&securepassctl.UserDescriptor{
 		Username: username,
 		Name:     c.String("name"),
 		Surname:  c.String("surname"),

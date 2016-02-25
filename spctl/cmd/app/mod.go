@@ -4,8 +4,8 @@ import (
 	"log"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/go-securepass/securepass"
-	"github.com/garlsecurity/go-securepass/securepass/spctl/service"
+	"github.com/garlsecurity/securepassctl"
+	"github.com/garlsecurity/securepassctl/spctl/service"
 )
 
 func init() {
@@ -55,7 +55,7 @@ func ActionMod(c *cli.Context) {
 		log.Fatal("error: must specify an app id")
 	}
 	app := c.Args()[0]
-	_, err := service.Service.AppMod(app, &securepass.ApplicationDescriptor{
+	_, err := service.Service.AppMod(app, &securepassctl.ApplicationDescriptor{
 		Label:            c.String("label"),
 		Group:            c.String("group"),
 		Realm:            c.String("realm"),

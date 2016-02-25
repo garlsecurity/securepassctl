@@ -9,7 +9,7 @@ GOPATH ?= $(CWD)/GOPATH
 GOX := $(GOPATH)/bin/gox
 GOLINT := $(GOPATH)/bin/golint
 
-BUILD_OPTS += -ldflags="-X main.Version $(VERSION)" -output="$(BUILD_DIR)/{{.OS}}/{{.Arch}}/{{.Dir}}" ./securepass/spctl
+BUILD_OPTS += -ldflags="-X main.Version $(VERSION)" -output="$(BUILD_DIR)/{{.OS}}/{{.Arch}}/{{.Dir}}" ../securepassctl/spctl
 
 build: build/linux build/darwin build/windows
 
@@ -34,7 +34,7 @@ release: build
 	rm -rf release && mkdir release
 	tar -zcf release/$(NAME)_$(VERSION)_linux_$(HARDWARE).tgz -C build/linux $(NAME)
 	tar -zcf release/$(NAME)_$(VERSION)_darwin_$(HARDWARE).tgz -C build/darwin $(NAME)
-	gh-release create garlsecurity/go-securepass $(VERSION) $(shell git rev-parse --abbrev-ref HEAD)
+	gh-release create garlsecurity/securepassctl $(VERSION) $(shell git rev-parse --abbrev-ref HEAD)
 
 test: deps
 	go vet ./...

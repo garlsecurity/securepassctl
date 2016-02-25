@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/go-securepass/securepass/spctl/cmd"
-	"github.com/garlsecurity/go-securepass/securepass/spctl/service"
+	"github.com/garlsecurity/securepassctl/spctl/cmd"
+	"github.com/garlsecurity/securepassctl/spctl/service"
 )
 
 var (
@@ -40,9 +40,9 @@ Commands:
     {{range .Commands}}{{join .Names ", "}}{{ "\t" }}{{.Usage}}
     {{end}}{{end}}
 
-spctl home page: <https://github.com/garlsecurity/go-securepass>
+spctl home page: <https://github.com/garlsecurity/securepassctl>
 SecurePass online help: <http://www.secure-pass.net/integration-guides-examples/>
-Report bugs to <https://github.com/garlsecurity/go-securepass/issues>
+Report bugs to <https://github.com/garlsecurity/securepassctl/issues>
 `
 	cli.CommandHelpTemplate = `Usage: {{.HelpName}}{{if .Flags}} [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}
 {{.Usage}}

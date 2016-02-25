@@ -1,4 +1,4 @@
-package securepass
+package securepassctl
 
 // ApplicationDescriptor describes the basic attributes of
 // a Securepass application

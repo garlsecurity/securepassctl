@@ -4,7 +4,7 @@ import (
 	"log"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/go-securepass/securepass/spctl/service"
+	"github.com/garlsecurity/securepassctl/spctl/service"
 )
 
 // Command holds the ping command

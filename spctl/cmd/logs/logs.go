@@ -9,8 +9,8 @@ import (
 	"strconv"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/go-securepass/securepass"
-	"github.com/garlsecurity/go-securepass/securepass/spctl/service"
+	"github.com/garlsecurity/securepassctl"
+	"github.com/garlsecurity/securepassctl/spctl/service"
 )
 
 // DateFormat is the supported datetime format
@@ -55,11 +55,11 @@ func ActionLogs(c *cli.Context) {
 		log.Fatalf("error: %v", err)
 	}
 
-	records := []securepass.LogEntry{}
+	records := []securepassctl.LogEntry{}
 	for _, entry := range resp.Logs {
 		records = append(records, entry)
 	}
-	sort.Sort(securepass.LogEntriesByTimestamp(records))
+	sort.Sort(securepassctl.LogEntriesByTimestamp(records))
 	if !c.Bool("csv") {
 		for _, entry := range records {
 			fmt.Printf("%-19s %s\n", entry.Timestamp, entry.Message)

@@ -1,4 +1,4 @@
-package securepass
+package securepassctl
 
 import (
 	"bytes"
