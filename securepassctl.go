@@ -48,7 +48,7 @@ func (s *SecurePass) makeRequestURL(path string) (string, error) {
 }
 
 // NewRequest initializes and issues an HTTP request to the SecurePass endpoint
-func (s *SecurePass) NewRequest(method, path string, buf *bytes.Buffer) (*http.Request, error) {
+func (s *SecurePass) NewRequest(method, path string, data *url.Values) (*http.Request, error) {
 	var err error
 	var req *http.Request
 
@@ -56,8 +56,8 @@ func (s *SecurePass) NewRequest(method, path string, buf *bytes.Buffer) (*http.R
 	if err != nil {
 		return nil, err
 	}
-	if buf != nil {
-		req, err = http.NewRequest(method, URL, buf)
+	if data != nil {
+		req, err = http.NewRequest(method, URL, bytes.NewBufferString(data.Encode()))
 	} else {
 		req, err = http.NewRequest(method, URL, nil)
 	}
@@ -109,7 +109,7 @@ func (s *SecurePass) AppInfo(app string) (*AppInfoResponse, error) {
 		data.Set("APP_ID", app)
 	}
 
-	req, err := s.NewRequest("POST", "/api/v1/apps/info", bytes.NewBufferString(data.Encode()))
+	req, err := s.NewRequest("POST", "/api/v1/apps/info", &data)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +138,7 @@ func (s *SecurePass) AppAdd(app *ApplicationDescriptor) (*AppAddResponse, error)
 		data.Set("REALM", app.Realm)
 	}
 
-	req, err := s.NewRequest("POST", "/api/v1/apps/add", bytes.NewBufferString(data.Encode()))
+	req, err := s.NewRequest("POST", "/api/v1/apps/add", &data)
 	if err != nil {
 		return nil, err
 	}
@@ -155,7 +155,7 @@ func (s *SecurePass) AppDel(app string) (*Response, error) {
 		data.Set("APP_ID", app)
 	}
 
-	req, err := s.NewRequest("POST", "/api/v1/apps/delete", bytes.NewBufferString(data.Encode()))
+	req, err := s.NewRequest("POST", "/api/v1/apps/delete", &data)
 	if err != nil {
 		return nil, err
 	}
@@ -184,9 +184,7 @@ func (s *SecurePass) AppMod(appID string, app *ApplicationDescriptor) (*AppInfoR
 		data.Set("GROUP", app.Group)
 	}
 
-	fmt.Println(data)
-
-	req, err := s.NewRequest("POST", "/api/v1/apps/modify", bytes.NewBufferString(data.Encode()))
+	req, err := s.NewRequest("POST", "/api/v1/apps/modify", &data)
 	if err != nil {
 		return nil, err
 	}
@@ -203,7 +201,7 @@ func (s *SecurePass) AppList(app *ApplicationDescriptor) (*AppListResponse, erro
 		data.Set("REALM", app.Realm)
 	}
 
-	req, err := s.NewRequest("POST", "/api/v1/apps/list", bytes.NewBufferString(data.Encode()))
+	req, err := s.NewRequest("POST", "/api/v1/apps/list", &data)
 	if err != nil {
 		return nil, err
 	}
@@ -226,7 +224,7 @@ func (s *SecurePass) Logs(realm, start, end string) (*LogsResponse, error) {
 		data.Set("END", end)
 	}
 
-	req, err := s.NewRequest("POST", "/api/v1/logs/get", bytes.NewBufferString(data.Encode()))
+	req, err := s.NewRequest("POST", "/api/v1/logs/get", &data)
 	if err != nil {
 		return nil, err
 	}
@@ -239,14 +237,10 @@ func (s *SecurePass) GroupMember(user, group string) (*GroupMemberResponse, erro
 	var obj GroupMemberResponse
 
 	data := url.Values{}
-	if user != "" {
-		data.Set("USERNAME", user)
-	}
-	if group != "" {
-		data.Set("GROUP", group)
-	}
+	data.Set("USERNAME", user)
+	data.Set("GROUP", group)
 
-	req, err := s.NewRequest("POST", "/api/v1/groups/member", bytes.NewBufferString(data.Encode()))
+	req, err := s.NewRequest("POST", "/api/v1/groups/member", &data)
 	if err != nil {
 		return nil, err
 	}
@@ -261,7 +255,7 @@ func (s *SecurePass) UserInfo(username string) (*UserInfoResponse, error) {
 	data := url.Values{}
 	data.Set("USERNAME", username)
 
-	req, err := s.NewRequest("POST", "/api/v1/users/info", bytes.NewBufferString(data.Encode()))
+	req, err := s.NewRequest("POST", "/api/v1/users/info", &data)
 	if err != nil {
 		return nil, err
 	}
@@ -278,7 +272,7 @@ func (s *SecurePass) UserList(realm string) (*UserListResponse, error) {
 		data.Set("REALM", realm)
 	}
 
-	req, err := s.NewRequest("POST", "/api/v1/users/list", bytes.NewBufferString(data.Encode()))
+	req, err := s.NewRequest("POST", "/api/v1/users/list", &data)
 	if err != nil {
 		return nil, err
 	}
@@ -294,7 +288,7 @@ func (s *SecurePass) UserAuth(username, secret string) (*UserAuthResponse, error
 	data.Set("USERNAME", username)
 	data.Set("SECRET", secret)
 
-	req, err := s.NewRequest("POST", "/api/v1/users/auth", bytes.NewBufferString(data.Encode()))
+	req, err := s.NewRequest("POST", "/api/v1/users/auth", &data)
 	if err != nil {
 		return nil, err
 	}
@@ -316,7 +310,7 @@ func (s *SecurePass) UserAdd(user *UserDescriptor) (*UserAddResponse, error) {
 	data.Set("RFID", user.Rfid)
 	data.Set("MANAGER", user.Manager)
 
-	req, err := s.NewRequest("POST", "/api/v1/users/add", bytes.NewBufferString(data.Encode()))
+	req, err := s.NewRequest("POST", "/api/v1/users/add", &data)
 	if err != nil {
 		return nil, err
 	}
@@ -331,7 +325,7 @@ func (s *SecurePass) UserDel(username string) (*Response, error) {
 	data := url.Values{}
 	data.Set("USERNAME", username)
 
-	req, err := s.NewRequest("POST", "/api/v1/users/delete", bytes.NewBufferString(data.Encode()))
+	req, err := s.NewRequest("POST", "/api/v1/users/delete", &data)
 	if err != nil {
 		return nil, err
 	}
