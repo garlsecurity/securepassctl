@@ -5,7 +5,6 @@ import (
 	"log"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/securepassctl"
 	"github.com/garlsecurity/securepassctl/spctl/service"
 )
 
@@ -36,9 +35,7 @@ func ActionList(c *cli.Context) {
 		log.Fatal("too many arguments")
 	}
 
-	resp, err := service.Service.AppList(&securepassctl.ApplicationDescriptor{
-		Realm: c.String("realm"),
-	})
+	resp, err := service.Service.AppList(c.String("realm"))
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}

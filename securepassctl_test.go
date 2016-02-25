@@ -73,3 +73,13 @@ func ExampleSecurePass_AppAdd() {
 	// 0
 	// 10
 }
+
+func ExampleSecurePass_AppList() {
+	var resp APIResponse
+	resp, err := testInstance.AppList("")
+	fmt.Println(resp.ErrorCode())
+	fmt.Println(err)
+	// Output:
+	// 0
+	// <nil>
+}
