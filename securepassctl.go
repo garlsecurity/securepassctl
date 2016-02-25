@@ -193,12 +193,12 @@ func (s *SecurePass) AppMod(appID string, app *ApplicationDescriptor) (*AppInfoR
 }
 
 // AppList retrieves the list of applications available in SecurePass
-func (s *SecurePass) AppList(app *ApplicationDescriptor) (*AppListResponse, error) {
+func (s *SecurePass) AppList(realm string) (*AppListResponse, error) {
 	var obj AppListResponse
 
 	data := url.Values{}
-	if app.Realm != "" {
-		data.Set("REALM", app.Realm)
+	if realm != "" {
+		data.Set("REALM", realm)
 	}
 
 	req, err := s.NewRequest("POST", "/api/v1/apps/list", &data)
