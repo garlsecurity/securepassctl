@@ -16,7 +16,8 @@ var (
 	// OptionDebug contains the --debug flag
 	OptionDebug bool
 	// Version of spctl
-	Version      string
+	Version string
+	// GNUHelpStyle indicates whether enable GNU-like help screen
 	GNUHelpStyle string
 )
 
