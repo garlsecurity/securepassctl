@@ -7,6 +7,7 @@ import (
 	"strconv"
 
 	"github.com/codegangsta/cli"
+	"github.com/garlsecurity/securepassctl"
 	"github.com/garlsecurity/securepassctl/spctl/cmd"
 	"github.com/garlsecurity/securepassctl/spctl/service"
 )
@@ -82,5 +83,12 @@ Commands:
 		},
 	}
 	a.Commands = cmd.Commands
+	a.Before = func(c *cli.Context) error {
+		if c.GlobalBool("debug") {
+			securepassctl.DebugLogger.SetOutput(os.Stderr)
+		}
+		return nil
+	}
+
 	a.Run(args)
 }

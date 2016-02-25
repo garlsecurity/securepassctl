@@ -17,13 +17,6 @@ var (
 	SSHSettings *securepassctl.SSHConfig
 )
 
-// ConfigureDebugLogger setups underlying library's logger
-func ConfigureDebugLogger(enable bool) {
-	if enable {
-		securepassctl.DebugLogger.SetOutput(os.Stderr)
-	}
-}
-
 // LoadConfiguration reads configuration from files
 func LoadConfiguration(conffiles []string) error {
 	cfg := ini.Empty()
