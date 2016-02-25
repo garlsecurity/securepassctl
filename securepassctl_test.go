@@ -47,6 +47,7 @@ func ExampleSecurePass_AppAdd() {
 	var (
 		resp         APIResponse
 		addResponse  *AppAddResponse
+		infoResponse *AppInfoResponse
 		fixtureAppID string
 	)
 
@@ -60,6 +61,16 @@ func ExampleSecurePass_AppAdd() {
 	// Check for its existence
 	resp, _ = testInstance.AppInfo(fixtureAppID)
 	fmt.Println(resp.ErrorCode())
+	// Modify it
+	resp, _ = testInstance.AppMod(fixtureAppID, &ApplicationDescriptor{
+		Write:   false,
+		Label:   appLabel + "newLabel",
+		Privacy: true,
+	})
+	fmt.Println(resp.ErrorCode())
+	// Check whether the modifcations have been applied
+	infoResponse, _ = testInstance.AppInfo(fixtureAppID)
+	fmt.Println(infoResponse.Label == appLabel+"newLabel")
 	// Remove it
 	resp, _ = testInstance.AppDel(fixtureAppID)
 	fmt.Println(resp.ErrorCode())
@@ -70,6 +81,8 @@ func ExampleSecurePass_AppAdd() {
 	// 0
 	// true
 	// 0
+	// 0
+	// true
 	// 0
 	// 10
 }
