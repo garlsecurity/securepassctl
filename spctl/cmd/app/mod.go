@@ -13,7 +13,7 @@ func init() {
 		cli.Command{
 			Name:        "mod",
 			Usage:       "modify application",
-			ArgsUsage:   "LABEL",
+			ArgsUsage:   "APP_ID",
 			Description: "Modify an application in SecurePass",
 			Action:      ActionMod,
 			Flags: []cli.Flag{
@@ -55,6 +55,7 @@ func ActionMod(c *cli.Context) {
 		log.Fatal("error: must specify an app id")
 	}
 	app := c.Args()[0]
+	securepassctl.DebugLogger.Printf("Modifying application %s", app)
 	_, err := service.Service.AppMod(app, &securepassctl.ApplicationDescriptor{
 		Label:            c.String("label"),
 		Group:            c.String("group"),
@@ -67,6 +68,4 @@ func ActionMod(c *cli.Context) {
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
-
-	log.Println()
 }
