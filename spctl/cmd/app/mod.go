@@ -13,7 +13,7 @@ func init() {
 		cli.Command{
 			Name:        "mod",
 			Usage:       "modify application",
-			ArgsUsage:   "LABEL",
+			ArgsUsage:   "APP_ID",
 			Description: "Modify an application in SecurePass",
 			Action:      ActionMod,
 			Flags: []cli.Flag{
