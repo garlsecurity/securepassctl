@@ -333,6 +333,39 @@ func (s *SecurePass) UserDel(username string) (*Response, error) {
 	return &obj, err
 }
 
+// UserPasswordChange change user password
+func (s *SecurePass) UserPasswordChange(username, password string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	if username != "" && password != "" {
+		data.Set("USERNAME", username)
+		data.Set("PASSWORD", password)
+	}
+
+	req, err := s.NewRequest("POST", "/api/v1/users/password/change", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// UserPasswordDisable disable a user's password
+func (s *SecurePass) UserPasswordDisable(username string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("USERNAME", username)
+
+	req, err := s.NewRequest("POST", "/api/v1/users/password/disable", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 // Ping reprenets the /api/v1/ping API call
 func (s *SecurePass) Ping() (*PingResponse, error) {
 	var obj PingResponse
