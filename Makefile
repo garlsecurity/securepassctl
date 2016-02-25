@@ -6,20 +6,15 @@ BUILD_DIR ?= build
 
 CWD := $(shell pwd)
 GOPATH ?= $(CWD)/GOPATH
-GOX := $(GOPATH)/bin/gox
 GOLINT := $(GOPATH)/bin/golint
+LDFLAGS += -X=main.Version=$(VERSION)
 
-BUILD_OPTS += -ldflags="-X main.Version $(VERSION)" -output="$(BUILD_DIR)/{{.OS}}/{{.Arch}}/{{.Dir}}" ../securepassctl/spctl
+all: $(BUILD_DIR)/linux/amd64 $(BUILD_DIR)/linux/386 \
+	$(BUILD_DIR)/darwin/amd64 $(BUILD_DIR)/darwin/386 \
+	$(BUILD_DIR)/windows/amd64 $(BUILD_DIR)/windows/386
 
-build: build/linux build/darwin build/windows
-
-$(BUILD_DIR)/%: build-deps deps
-	$(GOX) -os=$(subst build/,,$@) $(BUILD_OPTS)
-
-build-deps: build-deps-stamp
-build-deps-stamp:
-	go get github.com/mitchellh/gox
-	touch $@
+$(BUILD_DIR)/%:
+	GOOS=$(word 2,$(subst /, ,$@)) GOARCH=$(word 3,$(subst /, ,$@)) go build -v -ldflags="$(LDFLAGS)" -o $@/spctl ../securepassctl/spctl
 
 deps: deps-stamp
 deps-stamp:
@@ -48,4 +43,4 @@ clean:
 	rm -rf $(BUILD_DIR)/
 
 
-.PHONY: build-deps release deps clean test
+.PHONY: release deps clean test
