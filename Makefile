@@ -41,7 +41,7 @@ dist-clean: clean
 	rm -f $(BUILD_DIR)/deps-stamp
 
 clean:
-	rm -rf $(BUILD_DIR)/
+	rm -rf $(BUILD_DIR)/*/ -rf
 
 
 .PHONY: release deps clean test
