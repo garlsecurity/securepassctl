@@ -5,6 +5,8 @@ import (
 	"crypto/tls"
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"net/url"
 )
@@ -17,6 +19,9 @@ const (
 	// UserAgent contains the default User-Agent value used in HTTP requests
 	UserAgent = "SecurePass CLI"
 )
+
+// DebugLogger collects all debug messages
+var DebugLogger = log.New(ioutil.Discard, "", log.LstdFlags)
 
 // SecurePass main object type
 type SecurePass struct {
@@ -66,6 +71,7 @@ func (s *SecurePass) NewRequest(method, path string, buf *bytes.Buffer) (*http.R
 // DoRequest issues an HTTP request
 func (s *SecurePass) DoRequest(req *http.Request, obj APIResponse, expstatus int) error {
 	client := NewClient(nil)
+	DebugLogger.Printf("Sending %s request to %s", req.Method, req.URL)
 	resp, err := client.Do(req)
 	if err != nil {
 		return err
