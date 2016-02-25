@@ -5,8 +5,8 @@ import (
 	"log"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/go-securepass/securepass"
-	"github.com/garlsecurity/go-securepass/securepass/spctl/service"
+	"github.com/garlsecurity/securepassctl/securepass"
+	"github.com/garlsecurity/securepassctl/securepass/spctl/service"
 )
 
 func init() {

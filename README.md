@@ -1,9 +1,9 @@
-[![GoDoc](https://godoc.org/github.com/garlsecurity/go-securepass?status.svg)](https://godoc.org/github.com/garlsecurity/go-securepass)
+[![GoDoc](https://godoc.org/github.com/garlsecurity/securepassctl?status.svg)](https://godoc.org/github.com/garlsecurity/go-securepass)
 [![Travis-CI 
-Status](https://api.travis-ci.org/garlsecurity/go-securepass.png?branch=master)](http://travis-ci.org/#!/garlsecurity/go-securepass)
-[![Coverage](http://gocover.io/_badge/github.com/garlsecurity/go-securepass/securepass?0)](http://gocover.io/github.com/garlsecurity/go-securepass/securepass)
+Status](https://api.travis-ci.org/garlsecurity/securepassctl.png?branch=master)](http://travis-ci.org/#!/garlsecurity/go-securepass)
+[![Coverage](http://gocover.io/_badge/github.com/garlsecurity/securepassctl/securepass?0)](http://gocover.io/github.com/garlsecurity/go-securepass/securepass)
 
-# go-securepass
+# securepassctl
 
 Go (golang) port of the SecurePass tool
 
@@ -26,7 +26,7 @@ Commands:
     help, h		Shows a list of commands or help for one command
     
 
-spctl home page: <https://github.com/garlsecurity/go-securepass>
+spctl home page: <https://github.com/garlsecurity/securepassctl>
 SecurePass online help: <http://www.secure-pass.net/integration-guides-examples/>
-Report bugs to <https://github.com/garlsecurity/go-securepass/issues>
+Report bugs to <https://github.com/garlsecurity/securepassctl/issues>
 ```

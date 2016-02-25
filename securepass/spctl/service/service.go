@@ -4,7 +4,7 @@ import (
 	"io"
 	"os"
 
-	"github.com/garlsecurity/go-securepass/securepass"
+	"github.com/garlsecurity/securepassctl/securepass"
 	"gopkg.in/ini.v1"
 )
 
