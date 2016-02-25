@@ -14,5 +14,5 @@ install:
 script:
   - export GOPATH=$HOME/gopath
   - export PATH=$HOME/gopath/bin:$PATH
-  - make build
+  - make
   - make test
