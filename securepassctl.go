@@ -382,6 +382,21 @@ func (s *SecurePass) UserProvision(username, token string) (*Response, error) {
 	return &obj, err
 }
 
+// UserXattrsDelete deletes an attribute from user's extended attributes
+func (s *SecurePass) UserXattrsDelete(username, attribute string) (*Response, error) {
+	return nil, nil
+}
+
+// UserXattrsList lists user's extended attributes
+func (s *SecurePass) UserXattrsList(username string) (*UserXattrsListResponse, error) {
+	return nil, nil
+}
+
+// UserXattrsSet set user's extended attributes
+func (s *SecurePass) UserXattrsSet(username, attribute, value string) (*Response, error) {
+	return nil, nil
+}
+
 // Ping reprenets the /api/v1/ping API call
 func (s *SecurePass) Ping() (*PingResponse, error) {
 	var obj PingResponse

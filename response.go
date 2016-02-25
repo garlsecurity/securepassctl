@@ -81,3 +81,19 @@ type UserAuthResponse struct {
 	Authenticated bool
 	Response
 }
+
+// UserXattrsListResponse encapsulates the /api/v1/users/xattrs/list HTTP response
+type UserXattrsListResponse UserXattrsDescriptor
+
+// ErrorCode returns the API call's numeric return code
+func (r *UserXattrsListResponse) ErrorCode() int {
+	rc := map[string]interface{}(UserXattrsDescriptor(*r))["rc"]
+	return int(rc.(float64))
+}
+
+// ErrorMessage returns the API call's text message
+func (r *UserXattrsListResponse) ErrorMessage() string {
+	v := map[string]interface{}(UserXattrsDescriptor(*r))["errorMsg"]
+	u := v.(string)
+	return u
+}
