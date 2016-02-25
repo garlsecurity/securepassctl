@@ -19,6 +19,7 @@ var Command = cli.Command{
 
 // ActionPing is the ping command handler
 func ActionPing(c *cli.Context) {
+	service.ConfigureDebugLogger(c.GlobalBool("debug"))
 	resp, err := service.Service.Ping()
 	if err != nil {
 		log.Fatalf("error: %v", err)
