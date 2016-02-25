@@ -67,6 +67,4 @@ func ActionMod(c *cli.Context) {
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
-
-	log.Println()
 }
