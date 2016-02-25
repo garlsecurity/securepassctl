@@ -9,20 +9,21 @@ GOPATH ?= $(CWD)/GOPATH
 GOLINT := $(GOPATH)/bin/golint
 LDFLAGS += -X=main.Version=$(VERSION)
 
+ci: $(BUILD_DIR)/linux/amd64
+
 all: $(BUILD_DIR)/linux/amd64 $(BUILD_DIR)/linux/386 \
 	$(BUILD_DIR)/darwin/amd64 $(BUILD_DIR)/darwin/386 \
 	$(BUILD_DIR)/windows/amd64 $(BUILD_DIR)/windows/386
 
-$(BUILD_DIR)/%:
+$(BUILD_DIR)/%: deps
 	GOOS=$(word 2,$(subst /, ,$@)) GOARCH=$(word 3,$(subst /, ,$@)) go build -v -ldflags="$(LDFLAGS)" -o $@/spctl ../securepassctl/spctl
 
-deps: deps-stamp
-deps-stamp:
-	go get -u -v github.com/codegangsta/cli
-	go get -u -v gopkg.in/ini.v1
+deps: $(BUILD_DIR)/deps-stamp
+$(BUILD_DIR)/deps-stamp:
 	go get -u -v github.com/progrium/gh-release/...
 	go get -u -v github.com/golang/lint/golint
 	go get -d -v ./... || true
+	mkdir -p $(BUILD_DIR)
 	touch $@
 
 release: build
@@ -37,7 +38,7 @@ test: deps
 	$(GOLINT) ./...
 
 dist-clean: clean
-	rm -f build-deps-stamp check-deps-stamp deps-stamp
+	rm -f $(BUILD_DIR)/deps-stamp
 
 clean:
 	rm -rf $(BUILD_DIR)/
