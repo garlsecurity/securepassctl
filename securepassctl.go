@@ -164,8 +164,8 @@ func (s *SecurePass) AppDel(app string) (*Response, error) {
 }
 
 // AppMod represents /api/v1/apps/modify
-func (s *SecurePass) AppMod(appID string, app *ApplicationDescriptor) (*AppInfoResponse, error) {
-	var obj AppInfoResponse
+func (s *SecurePass) AppMod(appID string, app *ApplicationDescriptor) (*Response, error) {
+	var obj Response
 
 	data := url.Values{}
 	data.Set("APP_ID", appID)
