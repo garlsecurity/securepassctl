@@ -372,7 +372,7 @@ func (s *SecurePass) UserProvision(username, token string) (*Response, error) {
 
 	data := url.Values{}
 	data.Set("USERNAME", username)
-	data.Set("USERNAME", token)
+	data.Set("SWTOKEN", token)
 
 	req, err := s.NewRequest("POST", "/api/v1/users/token/provision", &data)
 	if err != nil {
