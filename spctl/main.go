@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strconv"
 
 	"github.com/codegangsta/cli"
 	"github.com/garlsecurity/securepassctl/spctl/cmd"
@@ -14,7 +15,8 @@ var (
 	// OptionDebug contains the --debug flag
 	OptionDebug bool
 	// Version of spctl
-	Version string
+	Version      string
+	GNUHelpStyle string
 )
 
 func init() {
@@ -31,7 +33,8 @@ func init() {
 }
 
 func main() {
-	cli.AppHelpTemplate = `Usage: {{if .UsageText}}{{.UsageText}}{{else}}{{.HelpName}} {{if .Flags}}[global options]{{end}}{{if .Commands}} command [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}{{end}}
+	if b, e := strconv.ParseBool(GNUHelpStyle); e != nil || b {
+		cli.AppHelpTemplate = `Usage: {{if .UsageText}}{{.UsageText}}{{else}}{{.HelpName}} {{if .Flags}}[global options]{{end}}{{if .Commands}} command [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}{{end}}
 {{.Usage}}
   {{if .Flags}}
   {{range .Flags}}{{.}}
@@ -44,7 +47,7 @@ spctl home page: <https://github.com/garlsecurity/securepassctl>
 SecurePass online help: <http://www.secure-pass.net/integration-guides-examples/>
 Report bugs to <https://github.com/garlsecurity/securepassctl/issues>
 `
-	cli.CommandHelpTemplate = `Usage: {{.HelpName}}{{if .Flags}} [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}
+		cli.CommandHelpTemplate = `Usage: {{.HelpName}}{{if .Flags}} [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}
 {{.Usage}}
   {{if .Flags}}
   {{range .Flags}}{{.}}
@@ -53,7 +56,7 @@ Commands:
     {{range .Subcommands}}{{join .Names ", "}}{{ "\t" }}{{.Usage}}
     {{end}}{{end}}
 `
-	cli.SubcommandHelpTemplate = `Usage: {{.HelpName}}{{if .Flags}} [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}
+		cli.SubcommandHelpTemplate = `Usage: {{.HelpName}}{{if .Flags}} [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}
 {{.Usage}}
   {{if .Flags}}
   {{range .Flags}}{{.}}
@@ -62,6 +65,7 @@ Commands:
     {{range .Commands}}{{join .Names ", "}}{{ "\t" }}{{.Usage}}
     {{end}}{{end}}
 `
+	}
 	args := handleCompatMode(os.Args)
 	a := cli.NewApp()
 	a.Name = "spctl"

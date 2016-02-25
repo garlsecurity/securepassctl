@@ -7,7 +7,7 @@ BUILD_DIR ?= build
 CWD := $(shell pwd)
 GOPATH ?= $(CWD)/GOPATH
 GOLINT := $(GOPATH)/bin/golint
-LDFLAGS += -X=main.Version=$(VERSION)
+LDFLAGS_DEFAULT = -X=main.Version=$(VERSION)
 
 ci: $(BUILD_DIR)/linux/amd64
 
@@ -16,7 +16,7 @@ all: $(BUILD_DIR)/linux/amd64 $(BUILD_DIR)/linux/386 \
 	$(BUILD_DIR)/windows/amd64 $(BUILD_DIR)/windows/386
 
 $(BUILD_DIR)/%: deps
-	GOOS=$(word 2,$(subst /, ,$@)) GOARCH=$(word 3,$(subst /, ,$@)) go build -v -ldflags="$(LDFLAGS)" -o $@/spctl ../securepassctl/spctl
+	GOOS=$(word 2,$(subst /, ,$@)) GOARCH=$(word 3,$(subst /, ,$@)) go build -v -ldflags="$(LDFLAGS_DEFAULT) $(LDFLAGS)" -o $@/spctl ../securepassctl/spctl
 
 deps: $(BUILD_DIR)/deps-stamp
 $(BUILD_DIR)/deps-stamp:
