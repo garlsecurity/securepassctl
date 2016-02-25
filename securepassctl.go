@@ -366,6 +366,22 @@ func (s *SecurePass) UserPasswordDisable(username string) (*Response, error) {
 	return &obj, err
 }
 
+// UserProvision provisions a user with a token
+func (s *SecurePass) UserProvision(username, token string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("USERNAME", username)
+	data.Set("USERNAME", token)
+
+	req, err := s.NewRequest("POST", "/api/v1/users/token/provision", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 // Ping reprenets the /api/v1/ping API call
 func (s *SecurePass) Ping() (*PingResponse, error) {
 	var obj PingResponse
