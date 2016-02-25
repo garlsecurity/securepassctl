@@ -4,23 +4,19 @@ import (
 	"log"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/securepassctl/securepass"
-	"github.com/garlsecurity/securepassctl/securepass/spctl/service"
+	"github.com/garlsecurity/securepassctl"
+	"github.com/garlsecurity/securepassctl/spctl/service"
 )
 
 func init() {
 	Command.Subcommands = append(Command.Subcommands,
 		cli.Command{
-			Name:        "mod",
-			Usage:       "modify application",
+			Name:        "add",
+			Usage:       "add application to SecurePass",
 			ArgsUsage:   "LABEL",
-			Description: "Modify an application in SecurePass",
-			Action:      ActionMod,
+			Description: "Add an application to SecurePass.",
+			Action:      ActionAdd,
 			Flags: []cli.Flag{
-				cli.StringFlag{
-					Name:  "label, l",
-					Usage: "Label",
-				},
 				cli.StringFlag{
 					Name:  "ipv4, 4",
 					Usage: "restrict to IPv4 network (default: 0.0.0.0/0)",
@@ -33,13 +29,13 @@ func init() {
 					Name:  "group, g",
 					Usage: "Group name (restriction)",
 				},
+				cli.StringFlag{
+					Name:  "realm, r",
+					Usage: "Set alternate realm",
+				},
 				cli.BoolFlag{
 					Name:  "write, w",
-					Usage: "Write capabilities (default: false)",
-				},
-				cli.BoolTFlag{
-					Name:  "read, r",
-					Usage: "Read capabilities (default: true)",
+					Usage: "Write capabilities (default: read-only)",
 				},
 				cli.BoolFlag{
 					Name:  "privacy, p",
@@ -49,14 +45,15 @@ func init() {
 		})
 }
 
-// ActionMod provides the add subcommand
-func ActionMod(c *cli.Context) {
+// ActionAdd provides the add subcommand
+func ActionAdd(c *cli.Context) {
 	if len(c.Args()) != 1 {
-		log.Fatal("error: must specify an app id")
+		log.Fatal("error: must specify a label")
 	}
-	app := c.Args()[0]
-	_, err := service.Service.AppMod(app, &securepass.ApplicationDescriptor{
-		Label:            c.String("label"),
+	label := c.Args()[0]
+
+	resp, err := service.Service.AppAdd(&securepassctl.ApplicationDescriptor{
+		Label:            label,
 		Group:            c.String("group"),
 		Realm:            c.String("realm"),
 		Write:            c.Bool("write"),
@@ -68,5 +65,7 @@ func ActionMod(c *cli.Context) {
 		log.Fatalf("error: %v", err)
 	}
 
-	log.Println()
+	log.Printf("Application ID: %s\nApplication Secret: %s\n\n"+
+		"Please save the above results, secret will be no longer displayed for security reasons.",
+		resp.AppID, resp.AppSecret)
 }

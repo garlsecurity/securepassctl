@@ -6,8 +6,8 @@ import (
 	"os"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/securepassctl/securepass"
-	"github.com/garlsecurity/securepassctl/securepass/spctl/service"
+	"github.com/garlsecurity/securepassctl"
+	"github.com/garlsecurity/securepassctl/spctl/service"
 )
 
 // Command holds the config command
@@ -30,7 +30,7 @@ var Command = cli.Command{
 		cli.StringFlag{
 			Name:  "endpoint, e",
 			Usage: "Endpoint URL",
-			Value: securepass.DefaultRemote,
+			Value: securepassctl.DefaultRemote,
 		},
 		cli.StringFlag{
 			Name:  "appsecret, s",

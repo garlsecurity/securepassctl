@@ -6,8 +6,8 @@ import (
 	"path/filepath"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/securepassctl/securepass/spctl/cmd"
-	"github.com/garlsecurity/securepassctl/securepass/spctl/service"
+	"github.com/garlsecurity/securepassctl/spctl/cmd"
+	"github.com/garlsecurity/securepassctl/spctl/service"
 )
 
 var (

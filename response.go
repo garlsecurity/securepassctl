@@ -1,4 +1,4 @@
-package securepass
+package securepassctl
 
 // APIResponse gives access to the response details
 type APIResponse interface {

@@ -6,7 +6,7 @@ import (
 	"text/template"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/securepassctl/securepass/spctl/service"
+	"github.com/garlsecurity/securepassctl/spctl/service"
 )
 
 func init() {

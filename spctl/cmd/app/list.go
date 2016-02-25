@@ -1,26 +1,23 @@
-package user
+package app
 
 import (
 	"fmt"
 	"log"
 
 	"github.com/codegangsta/cli"
-	"github.com/garlsecurity/securepassctl/securepass/spctl/service"
+	"github.com/garlsecurity/securepassctl"
+	"github.com/garlsecurity/securepassctl/spctl/service"
 )
 
 func init() {
 	Command.Subcommands = append(Command.Subcommands,
 		cli.Command{
 			Name:        "list",
-			Usage:       "list SecurePass's users",
+			Usage:       "list SecurePass's applications",
 			ArgsUsage:   " ",
-			Description: "List SecurePass's users.",
+			Description: "List SecurePass's applications.",
 			Action:      ActionList,
 			Flags: []cli.Flag{
-				cli.StringFlag{
-					Name:  "noheaders, H",
-					Usage: "Don't print headers",
-				},
 				cli.StringFlag{
 					Name:  "realm, r",
 					Usage: "Set alternate realm",
@@ -39,30 +36,27 @@ func ActionList(c *cli.Context) {
 		log.Fatal("too many arguments")
 	}
 
-	resp, err := service.Service.UserList(c.String("realm"))
+	resp, err := service.Service.AppList(&securepassctl.ApplicationDescriptor{
+		Realm: c.String("realm"),
+	})
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
 
-	if c.Bool("details") && !c.Bool("noheaders") {
-		log.Printf("%-35s %-35s %s\n", "USERNAME", "FULL NAME", "STATUS")
+	if c.Bool("details") {
+		fmt.Printf("%-45s %-30s\n", "APP_ID", "LABEL")
 	}
 
-	for _, user := range resp.Username {
+	for _, app := range resp.AppID {
 		if !c.Bool("details") {
-			fmt.Println(user)
+			fmt.Printf("%s\n", app)
 		} else {
-			r, e := service.Service.UserInfo(user)
+			r, e := service.Service.AppInfo(app)
 			if e != nil {
 				log.Fatalf("couldn't retrieve details for '%s': %s",
-					user, err)
+					app, err)
 			}
-			status := "Active"
-			if !r.Enabled {
-				status = "Disabled"
-			}
-			fmt.Printf("%-35s %-35s %s\n", user, fmt.Sprintf("%s %s",
-				r.Name, r.Surname), status)
+			fmt.Printf("%-45s %-30s\n", app, r.Label)
 		}
 	}
 }

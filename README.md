@@ -1,7 +1,7 @@
-[![GoDoc](https://godoc.org/github.com/garlsecurity/securepassctl?status.svg)](https://godoc.org/github.com/garlsecurity/go-securepass)
+[![GoDoc](https://godoc.org/github.com/garlsecurity/securepassctl?status.svg)](https://godoc.org/github.com/garlsecurity/securepassctl)
 [![Travis-CI 
-Status](https://api.travis-ci.org/garlsecurity/securepassctl.png?branch=master)](http://travis-ci.org/#!/garlsecurity/go-securepass)
-[![Coverage](http://gocover.io/_badge/github.com/garlsecurity/securepassctl/securepass?0)](http://gocover.io/github.com/garlsecurity/go-securepass/securepass)
+Status](https://api.travis-ci.org/garlsecurity/securepassctl.png?branch=master)](http://travis-ci.org/#!/garlsecurity/securepassctl)
+[![Coverage](http://gocover.io/_badge/github.com/garlsecurity/securepassctl?0)](http://gocover.io/github.com/garlsecurity/securepassctl)
 
 # securepassctl
 

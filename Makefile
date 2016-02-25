@@ -9,7 +9,7 @@ GOPATH ?= $(CWD)/GOPATH
 GOX := $(GOPATH)/bin/gox
 GOLINT := $(GOPATH)/bin/golint
 
-BUILD_OPTS += -ldflags="-X main.Version $(VERSION)" -output="$(BUILD_DIR)/{{.OS}}/{{.Arch}}/{{.Dir}}" ./securepass/spctl
+BUILD_OPTS += -ldflags="-X main.Version $(VERSION)" -output="$(BUILD_DIR)/{{.OS}}/{{.Arch}}/{{.Dir}}" ../securepassctl/spctl
 
 build: build/linux build/darwin build/windows
 

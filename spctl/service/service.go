@@ -4,31 +4,31 @@ import (
 	"io"
 	"os"
 
-	"github.com/garlsecurity/securepassctl/securepass"
+	"github.com/garlsecurity/securepassctl"
 	"gopkg.in/ini.v1"
 )
 
 var (
 	// Service holds the global settings
-	Service *securepass.SecurePass
+	Service *securepassctl.SecurePass
 	// NSSSettings holds the NSS settings
-	NSSSettings *securepass.NSSConfig
+	NSSSettings *securepassctl.NSSConfig
 	// SSHSettings holds the SSH settings
-	SSHSettings *securepass.SSHConfig
+	SSHSettings *securepassctl.SSHConfig
 )
 
 // LoadConfiguration reads configuration from files
 func LoadConfiguration(conffiles []string) error {
 	cfg := ini.Empty()
-	Service = &securepass.SecurePass{
-		Endpoint: securepass.DefaultRemote,
+	Service = &securepassctl.SecurePass{
+		Endpoint: securepassctl.DefaultRemote,
 	}
-	NSSSettings = &securepass.NSSConfig{
+	NSSSettings = &securepassctl.NSSConfig{
 		DefaultGid:   100,
 		DefaultHome:  "/home",
 		DefaultShell: "/bin/bash",
 	}
-	SSHSettings = &securepass.SSHConfig{}
+	SSHSettings = &securepassctl.SSHConfig{}
 
 	for _, filename := range conffiles {
 		if fp, err := os.Open(filename); err == nil {
@@ -80,8 +80,8 @@ func LoadConfiguration(conffiles []string) error {
 }
 
 // WriteConfiguration saves configuration to file
-func WriteConfiguration(writer io.Writer, s *securepass.SecurePass, nss *securepass.NSSConfig, ssh *securepass.SSHConfig) (int64, error) {
-	globalConfig := securepass.GlobalConfig{
+func WriteConfiguration(writer io.Writer, s *securepassctl.SecurePass, nss *securepassctl.NSSConfig, ssh *securepassctl.SSHConfig) (int64, error) {
+	globalConfig := securepassctl.GlobalConfig{
 		*s, *nss, *ssh,
 	}
 
