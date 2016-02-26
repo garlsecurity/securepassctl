@@ -82,7 +82,9 @@ func LoadConfiguration(conffiles []string) error {
 // WriteConfiguration saves configuration to file
 func WriteConfiguration(writer io.Writer, s *securepassctl.SecurePass, nss *securepassctl.NSSConfig, ssh *securepassctl.SSHConfig) (int64, error) {
 	globalConfig := securepassctl.GlobalConfig{
-		*s, *nss, *ssh,
+		SecurePass: *s,
+		NSSConfig:  *nss,
+		SSHConfig:  *ssh,
 	}
 
 	cfg := ini.Empty()
