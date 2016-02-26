@@ -384,17 +384,50 @@ func (s *SecurePass) UserProvision(username, token string) (*Response, error) {
 
 // UserXattrsDelete deletes an attribute from user's extended attributes
 func (s *SecurePass) UserXattrsDelete(username, attribute string) (*Response, error) {
-	return nil, nil
+	var obj Response
+
+	data := url.Values{}
+	data.Set("USERNAME", username)
+	data.Set("ATTRIBUTE", attribute)
+
+	req, err := s.NewRequest("POST", "/api/v1/users/xattrs/delete", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
 }
 
 // UserXattrsList lists user's extended attributes
 func (s *SecurePass) UserXattrsList(username string) (*UserXattrsListResponse, error) {
-	return nil, nil
+	var obj UserXattrsListResponse
+
+	data := url.Values{}
+	data.Set("USERNAME", username)
+
+	req, err := s.NewRequest("POST", "/api/v1/users/xattrs/list", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
 }
 
 // UserXattrsSet set user's extended attributes
 func (s *SecurePass) UserXattrsSet(username, attribute, value string) (*Response, error) {
-	return nil, nil
+	var obj Response
+
+	data := url.Values{}
+	data.Set("USERNAME", username)
+	data.Set("ATTRIBUTE", attribute)
+	data.Set("VALUE", value)
+
+	req, err := s.NewRequest("POST", "/api/v1/users/xattrs/set", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
 }
 
 // Ping reprenets the /api/v1/ping API call
