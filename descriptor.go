@@ -60,7 +60,8 @@ type NSSConfig struct {
 
 // SSHConfig encapsulates the SecurePass's config section '[ssh]'
 type SSHConfig struct {
-	Root string `ini:"root"`
+	Root               string `ini:"root"`
+	StripWindowsDomain bool   `ini:"strip_windows_domain"`
 }
 
 // GlobalConfig encapsulates the SecurePass's whole configuration
