@@ -7,6 +7,7 @@ import (
 	"github.com/garlsecurity/securepassctl/spctl/cmd/groupmember"
 	"github.com/garlsecurity/securepassctl/spctl/cmd/logs"
 	"github.com/garlsecurity/securepassctl/spctl/cmd/ping"
+	"github.com/garlsecurity/securepassctl/spctl/cmd/radius"
 	"github.com/garlsecurity/securepassctl/spctl/cmd/user"
 )
 
@@ -17,5 +18,6 @@ var Commands = []cli.Command{
 	config.Command,
 	groupmember.Command,
 	logs.Command,
+	radius.Command,
 	user.Command,
 }
