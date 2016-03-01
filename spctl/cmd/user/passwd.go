@@ -45,13 +45,13 @@ func ActionPasswd(c *cli.Context) {
 		os.Exit(0)
 	}
 	fmt.Fprintf(os.Stderr, "Enter new password: ")
-	newPassword, err := terminal.ReadPassword(syscall.Stdin)
+	newPassword, err := terminal.ReadPassword(int(syscall.Stdin))
 	fmt.Fprintln(os.Stderr)
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
 	fmt.Fprintf(os.Stderr, "Confirm new password: ")
-	newPasswordConfirm, err := terminal.ReadPassword(syscall.Stdin)
+	newPasswordConfirm, err := terminal.ReadPassword(int(syscall.Stdin))
 	fmt.Fprintln(os.Stderr)
 	if err != nil {
 		log.Fatalf("error: %v", err)
