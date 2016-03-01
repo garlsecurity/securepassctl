@@ -9,7 +9,9 @@ GOPATH ?= $(CWD)/GOPATH
 GOLINT := $(GOPATH)/bin/golint
 LDFLAGS_DEFAULT = -X=main.Version=$(VERSION)
 
-ci: $(BUILD_DIR)/linux/amd64
+ci: $(BUILD_DIR)/linux/amd64 \
+	$(BUILD_DIR)/windows/amd64 \
+	$(BUILD_DIR)/darwin/amd64
 
 all: $(BUILD_DIR)/linux/amd64 $(BUILD_DIR)/linux/386 \
 	$(BUILD_DIR)/darwin/amd64 $(BUILD_DIR)/darwin/386 \
