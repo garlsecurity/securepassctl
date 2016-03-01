@@ -28,6 +28,9 @@ type UserDescriptor struct {
 	Token    string
 }
 
+// UserXattrsDescriptor defines the user's set of extended attributes
+type UserXattrsDescriptor map[string]interface{}
+
 // LogEntry is a SecurePass application's log entry
 type LogEntry struct {
 	// SecurePass response is currently broken, this
