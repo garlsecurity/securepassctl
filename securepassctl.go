@@ -430,7 +430,7 @@ func (s *SecurePass) UserXattrsSet(username, attribute, value string) (*Response
 	return &obj, err
 }
 
-// Ping reprenets the /api/v1/ping API call
+// Ping issues requests to the /api/v1/ping API endpoint
 func (s *SecurePass) Ping() (*PingResponse, error) {
 	var obj PingResponse
 
