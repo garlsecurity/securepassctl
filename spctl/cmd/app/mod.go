@@ -18,6 +18,10 @@ func init() {
 			Action:      ActionMod,
 			Flags: []cli.Flag{
 				cli.StringFlag{
+					Name:  "realm, r",
+					Usage: "Set alternate realm",
+				},
+				cli.StringFlag{
 					Name:  "label, l",
 					Usage: "Label",
 				},
