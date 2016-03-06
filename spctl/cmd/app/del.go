@@ -1,7 +1,10 @@
 package app
 
 import (
+	"fmt"
 	"log"
+	"os"
+	"strings"
 
 	"github.com/codegangsta/cli"
 	"github.com/garlsecurity/securepassctl/spctl/service"
@@ -30,6 +33,17 @@ func ActionDel(c *cli.Context) {
 		log.Fatal("error: must specify an app id")
 	}
 	app := c.Args()[0]
+
+	if !c.Bool("yes") {
+		var reply string
+		fmt.Fprintf(os.Stderr,
+			"Do you want to delete the application %q? [y/N] ", app)
+		fmt.Scanln(&reply)
+		reply = strings.ToLower(reply)
+		if reply != "y" && reply != "yes" {
+			os.Exit(-1)
+		}
+	}
 
 	if _, err := service.Service.AppDel(app); err != nil {
 		log.Fatalf("error: %v", err)

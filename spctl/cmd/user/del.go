@@ -36,7 +36,7 @@ func ActionDel(c *cli.Context) {
 
 	if !c.Bool("yes") {
 		var reply string
-		fmt.Fprintf(os.Stderr, "Do you want to delete the user '%s'? [y/N] ", username)
+		fmt.Fprintf(os.Stderr, "Do you want to delete the user %q? [y/N] ", username)
 		fmt.Scanln(&reply)
 		reply = strings.ToLower(reply)
 		if reply != "y" && reply != "yes" {
