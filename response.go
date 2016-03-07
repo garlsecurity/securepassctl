@@ -94,18 +94,18 @@ type RadiusListResponse struct {
 	Response
 }
 
-// UserXattrsListResponse encapsulates the /api/v1/users/xattrs/list HTTP response
-type UserXattrsListResponse UserXattrsDescriptor
+// XattrsListResponse encapsulates a xattrs HTTP response
+type XattrsListResponse XattrsDescriptor
 
 // ErrorCode returns the API call's numeric return code
-func (r *UserXattrsListResponse) ErrorCode() int {
-	rc := map[string]interface{}(UserXattrsDescriptor(*r))["rc"]
+func (r *XattrsListResponse) ErrorCode() int {
+	rc := map[string]interface{}(XattrsDescriptor(*r))["rc"]
 	return int(rc.(float64))
 }
 
 // ErrorMessage returns the API call's text message
-func (r *UserXattrsListResponse) ErrorMessage() string {
-	v := map[string]interface{}(UserXattrsDescriptor(*r))["errorMsg"]
+func (r *XattrsListResponse) ErrorMessage() string {
+	v := map[string]interface{}(XattrsDescriptor(*r))["errorMsg"]
 	u := v.(string)
 	return u
 }
