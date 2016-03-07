@@ -2,7 +2,7 @@ package radius
 
 import "github.com/codegangsta/cli"
 
-// Command holds the app subcommands
+// Command holds the radius subcommands
 var Command = cli.Command{
 	Name:        "radius",
 	Usage:       "manage RADIUS information",
