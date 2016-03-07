@@ -9,6 +9,7 @@ Go (golang) port of the SecurePass tool
 
 # Usage
 ```console
+$ spctl -h
 Usage: spctl [global options] command [command options] [arguments...]
 Manage distributed identities.
   
@@ -22,6 +23,8 @@ Commands:
     config		configure SecurePass
     group-member	test group membership
     logs		display SecurePass logs
+    radius		manage RADIUS information
+    realm		manage realm settings
     user		manage users
     help, h		Shows a list of commands or help for one command
     
