@@ -399,8 +399,8 @@ func (s *SecurePass) UserXattrsDelete(username, attribute string) (*Response, er
 }
 
 // UserXattrsList lists user's extended attributes
-func (s *SecurePass) UserXattrsList(username string) (*UserXattrsListResponse, error) {
-	var obj UserXattrsListResponse
+func (s *SecurePass) UserXattrsList(username string) (*XattrsListResponse, error) {
+	var obj XattrsListResponse
 
 	data := url.Values{}
 	data.Set("USERNAME", username)
@@ -542,8 +542,8 @@ func (s *SecurePass) RealmXattrsDelete(realm, attribute string) (*Response, erro
 }
 
 // RealmXattrsList lists realm's extended attributes
-func (s *SecurePass) RealmXattrsList(realm string) (*UserXattrsListResponse, error) {
-	var obj UserXattrsListResponse
+func (s *SecurePass) RealmXattrsList(realm string) (*XattrsListResponse, error) {
+	var obj XattrsListResponse
 
 	data := url.Values{}
 	data.Set("REALM", realm)

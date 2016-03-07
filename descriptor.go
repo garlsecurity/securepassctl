@@ -28,8 +28,8 @@ type UserDescriptor struct {
 	Token    string
 }
 
-// UserXattrsDescriptor defines the user's set of extended attributes
-type UserXattrsDescriptor map[string]interface{}
+// XattrsDescriptor defines a set of extended attributes
+type XattrsDescriptor map[string]interface{}
 
 // RadiusDescriptor defines the attributes of SecurePass RADIUS devices
 type RadiusDescriptor struct {
