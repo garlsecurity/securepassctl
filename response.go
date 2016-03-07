@@ -82,6 +82,18 @@ type UserAuthResponse struct {
 	Response
 }
 
+// RadiusInfoResponse encapsulates the /api/v1/radius/info call's HTTP response
+type RadiusInfoResponse struct {
+	RadiusDescriptor
+	Response
+}
+
+// RadiusListResponse encapsulates the /api/v1/radius HTTP response
+type RadiusListResponse struct {
+	IPAddrs []string `json:"radius"`
+	Response
+}
+
 // UserXattrsListResponse encapsulates the /api/v1/users/xattrs/list HTTP response
 type UserXattrsListResponse UserXattrsDescriptor
 

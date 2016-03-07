@@ -430,6 +430,101 @@ func (s *SecurePass) UserXattrsSet(username, attribute, value string) (*Response
 	return &obj, err
 }
 
+// RadiusAdd adds a RADIUS to SecurePass RADIUS
+func (s *SecurePass) RadiusAdd(radius *RadiusDescriptor) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("RADIUS", radius.Radius)
+	data.Set("NAME", radius.Name)
+	data.Set("SECRET", radius.Secret)
+	data.Set("GROUP", radius.Group)
+	data.Set("RFID", fmt.Sprintf("%v", radius.Rfid))
+	data.Set("REALM", radius.Realm)
+
+	req, err := s.NewRequest("POST", "/api/v1/radius/add", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// RadiusInfo retrieves information on a SecurePass RADIUS device
+func (s *SecurePass) RadiusInfo(ipaddr string) (*RadiusInfoResponse, error) {
+	var obj RadiusInfoResponse
+
+	data := url.Values{}
+	data.Set("RADIUS", ipaddr)
+
+	req, err := s.NewRequest("POST", "/api/v1/radius/info", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// RadiusDel deletes a RADIUS device from SecurePass
+func (s *SecurePass) RadiusDel(ipaddr string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("RADIUS", ipaddr)
+
+	req, err := s.NewRequest("POST", "/api/v1/radius/delete", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// RadiusList retrieves the list of RADIUS devices available in SecurePass
+func (s *SecurePass) RadiusList(realm string) (*RadiusListResponse, error) {
+	var obj RadiusListResponse
+
+	data := url.Values{}
+	if realm != "" {
+		data.Set("REALM", realm)
+	}
+
+	req, err := s.NewRequest("POST", "/api/v1/radius/list", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// RadiusMod modify a RADIUS device available in SecurePass
+func (s *SecurePass) RadiusMod(radiusID string, radius *RadiusDescriptor) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("RADIUS", radiusID)
+	data.Set("RFID", fmt.Sprintf("%v", radius.Rfid))
+	if radius.Name != "" {
+		data.Set("NAME", radius.Name)
+	}
+	if radius.Secret != "" {
+		data.Set("SECRET", radius.Secret)
+	}
+	if radius.Realm != "" {
+		data.Set("REALM", radius.Realm)
+	}
+	if radius.Group != "" {
+		data.Set("GROUP", radius.Group)
+	}
+
+	req, err := s.NewRequest("POST", "/api/v1/radius/modify", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 // Ping issues requests to the /api/v1/ping API endpoint
 func (s *SecurePass) Ping() (*PingResponse, error) {
 	var obj PingResponse

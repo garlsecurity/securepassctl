@@ -31,6 +31,16 @@ type UserDescriptor struct {
 // UserXattrsDescriptor defines the user's set of extended attributes
 type UserXattrsDescriptor map[string]interface{}
 
+// RadiusDescriptor defines the attributes of SecurePass RADIUS devices
+type RadiusDescriptor struct {
+	Radius string
+	Name   string
+	Secret string
+	Group  string
+	Realm  string
+	Rfid   bool
+}
+
 // LogEntry is a SecurePass application's log entry
 type LogEntry struct {
 	// SecurePass response is currently broken, this
