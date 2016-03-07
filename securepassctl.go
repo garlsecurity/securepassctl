@@ -525,6 +525,54 @@ func (s *SecurePass) RadiusMod(radiusID string, radius *RadiusDescriptor) (*Resp
 	return &obj, err
 }
 
+// RealmXattrsDelete deletes an attribute from realm's extended attributes
+func (s *SecurePass) RealmXattrsDelete(realm, attribute string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("REALM", realm)
+	data.Set("ATTRIBUTE", attribute)
+
+	req, err := s.NewRequest("POST", "/api/v1/realms/xattrs/delete", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// RealmXattrsList lists realm's extended attributes
+func (s *SecurePass) RealmXattrsList(realm string) (*UserXattrsListResponse, error) {
+	var obj UserXattrsListResponse
+
+	data := url.Values{}
+	data.Set("REALM", realm)
+
+	req, err := s.NewRequest("POST", "/api/v1/realms/xattrs/list", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// RealmXattrsSet set realm's extended attributes
+func (s *SecurePass) RealmXattrsSet(realm, attribute, value string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("REALM", realm)
+	data.Set("ATTRIBUTE", attribute)
+	data.Set("VALUE", value)
+
+	req, err := s.NewRequest("POST", "/api/v1/realms/xattrs/set", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 // Ping issues requests to the /api/v1/ping API endpoint
 func (s *SecurePass) Ping() (*PingResponse, error) {
 	var obj PingResponse
