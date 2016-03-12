@@ -103,6 +103,11 @@ Commands:
 			Usage: "configuration file",
 		},
 	}
+	a.OnUsageError = func(context *cli.Context,
+		err error, isSubcommand bool) error {
+		log.Fatalf("error: %v", err)
+		return err
+	}
 	a.Commands = cmd.Commands
 	a.Before = func(c *cli.Context) error {
 		if c.GlobalBool("debug") {
