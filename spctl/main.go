@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -24,14 +25,29 @@ var (
 func init() {
 	log.SetPrefix("")
 	log.SetFlags(0)
+}
+
+func loadConfiguration(userConfigFile string) error {
 	cwd, err := os.Getwd()
 	if err != nil {
-		panic(err)
+		return err
+	}
+	if userConfigFile != "" {
+		if info, err := os.Stat(userConfigFile); err != nil {
+			return err
+			//log.Fatalf("error: %v", err)
+		} else if !info.Mode().IsRegular() {
+			//			log.Fatalf("error: %q is not a regular file", userConfigFile)
+			return fmt.Errorf("%q is not a regular file", userConfigFile)
+		}
+		service.LoadConfiguration([]string{userConfigFile})
+		return nil
 	}
 	SystemConfigFiles := []string{"/etc/securepass.conf",
 		"/usr/local/etc/securepass.conf",
 		filepath.Join(cwd, "securepass.conf")}
 	service.LoadConfiguration(SystemConfigFiles)
+	return nil
 }
 
 func main() {
@@ -82,13 +98,18 @@ Commands:
 			Usage:       "enable debug output",
 			Destination: &OptionDebug,
 		},
+		cli.StringFlag{
+			Name:  "config, c",
+			Usage: "configuration file",
+		},
 	}
 	a.Commands = cmd.Commands
 	a.Before = func(c *cli.Context) error {
 		if c.GlobalBool("debug") {
 			securepassctl.DebugLogger.SetOutput(os.Stderr)
 		}
-		return nil
+		err := loadConfiguration(c.GlobalString("config"))
+		return err
 	}
 
 	a.Run(args)
