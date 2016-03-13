@@ -18,10 +18,6 @@ func init() {
 			Action:      ActionMod,
 			Flags: []cli.Flag{
 				cli.StringFlag{
-					Name:  "realm, r",
-					Usage: "Set alternate realm",
-				},
-				cli.StringFlag{
 					Name:  "label, l",
 					Usage: "Label",
 				},
@@ -63,7 +59,6 @@ func ActionMod(c *cli.Context) {
 	_, err := service.Service.AppMod(app, &securepassctl.ApplicationDescriptor{
 		Label:            c.String("label"),
 		Group:            c.String("group"),
-		Realm:            c.String("realm"),
 		Write:            c.Bool("write"),
 		Privacy:          c.Bool("privacy"),
 		AllowNetworkIPv4: c.String("ipv4"),
