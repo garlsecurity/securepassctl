@@ -31,13 +31,17 @@ func LoadConfiguration(conffiles []string) error {
 	SSHSettings = &securepassctl.SSHConfig{}
 
 	for _, filename := range conffiles {
+
 		if fp, err := os.Open(filename); err == nil {
+			securepassctl.DebugLogger.Printf("Configuration file at: %s", filename)
+
 			fp.Close()
 			cfg.Append(filename)
 		}
 	}
 
 	defaultSection, err := cfg.GetSection("default")
+
 	if err != nil {
 		defaultSection, _ = cfg.NewSection("default")
 		err = defaultSection.ReflectFrom(Service)
@@ -75,6 +79,11 @@ func LoadConfiguration(conffiles []string) error {
 			panic(err)
 		}
 	}
+
+	// Let's dump in debug our settings
+	securepassctl.DebugLogger.Printf("App ID is: %s", Service.AppID)
+	securepassctl.DebugLogger.Printf("App Secret is: %s", Service.AppSecret)
+	securepassctl.DebugLogger.Printf("Endpoint is: %s", Service.Endpoint)
 
 	return nil
 }
