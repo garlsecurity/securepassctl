@@ -25,8 +25,8 @@ var DebugLogger = log.New(ioutil.Discard, "", log.LstdFlags)
 
 // SecurePass main object type
 type SecurePass struct {
-	AppID     string `ini:"APP_ID"`
-	AppSecret string `ini:"APP_SECRET"`
+	AppID     string `ini:"app_id"`
+	AppSecret string `ini:"app_secret"`
 	Endpoint  string
 }
 

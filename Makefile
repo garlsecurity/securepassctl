@@ -17,6 +17,9 @@ all: $(BUILD_DIR)/linux/amd64 $(BUILD_DIR)/linux/386 \
 	$(BUILD_DIR)/darwin/amd64 $(BUILD_DIR)/darwin/386 \
 	$(BUILD_DIR)/windows/amd64 $(BUILD_DIR)/windows/386
 
+darwin: $(BUILD_DIR)/darwin/amd64 $(BUILD_DIR)/darwin/386
+	lipo -create build/darwin/386/spctl build/darwin/amd64/spctl -output build/darwin/spctl
+
 $(BUILD_DIR)/%: deps
 	GOOS=$(word 2,$(subst /, ,$@)) GOARCH=$(word 3,$(subst /, ,$@)) go build -v -ldflags="$(LDFLAGS_DEFAULT) $(LDFLAGS)" -o $@/spctl ../securepassctl/spctl
 

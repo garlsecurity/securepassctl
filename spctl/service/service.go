@@ -20,14 +20,17 @@ var (
 // LoadConfiguration reads configuration from files
 func LoadConfiguration(conffiles []string) error {
 	cfg := ini.Empty()
+
 	Service = &securepassctl.SecurePass{
 		Endpoint: securepassctl.DefaultRemote,
 	}
+
 	NSSSettings = &securepassctl.NSSConfig{
 		DefaultGid:   100,
 		DefaultHome:  "/home",
 		DefaultShell: "/bin/bash",
 	}
+
 	SSHSettings = &securepassctl.SSHConfig{}
 
 	for _, filename := range conffiles {
@@ -38,6 +41,7 @@ func LoadConfiguration(conffiles []string) error {
 			fp.Close()
 			cfg.Append(filename)
 		}
+		
 	}
 
 	defaultSection, err := cfg.GetSection("default")
