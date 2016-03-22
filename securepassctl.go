@@ -27,7 +27,7 @@ var DebugLogger = log.New(ioutil.Discard, "", log.LstdFlags)
 type SecurePass struct {
 	AppID     string `ini:"app_id"`
 	AppSecret string `ini:"app_secret"`
-	Endpoint  string
+	Endpoint  string `ini:"endpoint"`
 }
 
 func (s *SecurePass) setupRequestFieds(req *http.Request) {
