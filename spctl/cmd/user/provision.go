@@ -12,6 +12,8 @@ var tokenTypes = map[string]bool{
 	"android":    true,
 	"blackberry": true,
 	"software":   true,
+	"securepass": true,
+	"googleauth": true,
 }
 
 func init() {
@@ -25,8 +27,8 @@ func init() {
 			Flags: []cli.Flag{
 				cli.StringFlag{
 					Name:  "token, t",
-					Usage: "Token type",
-					Value: "software",
+					Usage: "Token type (securepass, googleauth)",
+					Value: "securepass",
 				},
 			},
 		})
