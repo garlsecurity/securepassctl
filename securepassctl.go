@@ -301,14 +301,28 @@ func (s *SecurePass) UserAdd(user *UserDescriptor) (*UserAddResponse, error) {
 	var obj UserAddResponse
 
 	data := url.Values{}
+
+	// Compulsory fields
 	data.Set("USERNAME", user.Username)
 	data.Set("NAME", user.Name)
 	data.Set("SURNAME", user.Surname)
 	data.Set("EMAIL", user.Email)
 	data.Set("MOBILE", user.Mobile)
-	data.Set("NIN", user.Nin)
-	data.Set("RFID", user.Rfid)
-	data.Set("MANAGER", user.Manager)
+
+	// Optional NIN
+	if user.Nin != "" {
+		data.Set("NIN", user.Nin)
+	}
+
+	// Optional RFID
+	if user.Rfid != "" {
+		data.Set("RFID", user.Rfid)
+	}
+
+	// Optional manager
+	if user.Manager != "" {
+	   data.Set("MANAGER", user.Manager)
+    }
 
 	req, err := s.NewRequest("POST", "/api/v1/users/add", &data)
 	if err != nil {
