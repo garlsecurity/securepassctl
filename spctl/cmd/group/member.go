@@ -1,4 +1,4 @@
-package groupmember
+package group
 
 import (
 	"fmt"
@@ -9,20 +9,23 @@ import (
 	"github.com/garlsecurity/securepassctl/spctl/service"
 )
 
-// Command holds the group-member command
-var Command = cli.Command{
-	Name:        "group-member",
-	Usage:       "test group membership",
-	ArgsUsage:   "USERNAME GROUP",
-	Description: "Check whether a SecurePass user belongs to a group.",
-	Action:      ActionGroupMember,
-	Flags: []cli.Flag{
-		cli.BoolFlag{
-			Name:  "no-output, o",
-			Usage: "Suppress output",
-		},
-	},
+func init() {
+	Command.Subcommands = append(Command.Subcommands,
+		cli.Command{
+	        Name:        "member",
+	        Usage:       "test group membership",
+	        ArgsUsage:   "USERNAME GROUP",
+	        Description: "Check whether a SecurePass user belongs to a group.",
+	        Action:      ActionGroupMember,
+	        Flags: []cli.Flag{
+	               cli.BoolFlag{
+	                       Name:  "no-output, o",
+	                       Usage: "Suppress output",
+	               },
+	        },
+		})
 }
+
 
 // ActionGroupMember handles the group-member command
 func ActionGroupMember(c *cli.Context) {
