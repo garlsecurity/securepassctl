@@ -125,15 +125,19 @@ func (s *SecurePass) AppAdd(app *ApplicationDescriptor) (*AppAddResponse, error)
 	data.Set("LABEL", app.Label)
 	data.Set("WRITE", fmt.Sprintf("%v", app.Write))
 	data.Set("PRIVACY", fmt.Sprintf("%v", app.Privacy))
+
 	if app.AllowNetworkIPv4 != "" {
 		data.Set("ALLOW_NETWORK_IPv4", app.AllowNetworkIPv4)
 	}
+	
 	if app.AllowNetworkIPv6 != "" {
 		data.Set("ALLOW_NETWORK_IPv6", app.AllowNetworkIPv6)
 	}
+	
 	if app.Group != "" {
 		data.Set("GROUP", app.Group)
 	}
+	
 	if app.Realm != "" {
 		data.Set("REALM", app.Realm)
 	}

@@ -12,7 +12,7 @@ func init() {
 		cli.Command{
 			Name:        "xattrs",
 			Usage:       "access user xattrs",
-			ArgsUsage:   "USERNAME OPERATION [ATTRIBUTE [VALUE]]",
+			ArgsUsage:   "USERNAME [list,set,delete] [ATTRIBUTE [VALUE]]",
 			Description: "Operate on users' extended attributes in SecurePass.",
 			Action:      ActionXattrs,
 		})

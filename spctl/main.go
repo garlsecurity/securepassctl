@@ -61,9 +61,7 @@ Commands:
     {{range .Commands}}{{join .Names ", "}}{{ "\t" }}{{.Usage}}
     {{end}}{{end}}
 
-spctl home page: <https://github.com/garlsecurity/securepassctl>
-SecurePass online help: <http://www.secure-pass.net/integration-guides-examples/>
-Report bugs to <https://github.com/garlsecurity/securepassctl/issues>
+More about SecurePass on http://www.secure-pass.net
 `
 		cli.CommandHelpTemplate = `Usage: {{.HelpName}}{{if .Flags}} [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}
 {{.Usage}}
