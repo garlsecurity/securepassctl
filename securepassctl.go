@@ -129,15 +129,15 @@ func (s *SecurePass) AppAdd(app *ApplicationDescriptor) (*AppAddResponse, error)
 	if app.AllowNetworkIPv4 != "" {
 		data.Set("ALLOW_NETWORK_IPv4", app.AllowNetworkIPv4)
 	}
-	
+
 	if app.AllowNetworkIPv6 != "" {
 		data.Set("ALLOW_NETWORK_IPv6", app.AllowNetworkIPv6)
 	}
-	
+
 	if app.Group != "" {
 		data.Set("GROUP", app.Group)
 	}
-	
+
 	if app.Realm != "" {
 		data.Set("REALM", app.Realm)
 	}
@@ -252,6 +252,23 @@ func (s *SecurePass) GroupMember(user, group string) (*GroupMemberResponse, erro
 	return &obj, err
 }
 
+// GroupList issues requests to /api/v1/groups/list
+func (s *SecurePass) GroupList(realm string) (*GroupListResponse, error) {
+	var obj GroupListResponse
+
+	data := url.Values{}
+	if realm != "" {
+		data.Set("REALM", realm)
+	}
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/list", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 // UserInfo issues requests to /api/v1/users/info
 func (s *SecurePass) UserInfo(username string) (*UserInfoResponse, error) {
 	var obj UserInfoResponse
@@ -325,8 +342,8 @@ func (s *SecurePass) UserAdd(user *UserDescriptor) (*UserAddResponse, error) {
 
 	// Optional manager
 	if user.Manager != "" {
-	   data.Set("MANAGER", user.Manager)
-    }
+		data.Set("MANAGER", user.Manager)
+	}
 
 	req, err := s.NewRequest("POST", "/api/v1/users/add", &data)
 	if err != nil {
