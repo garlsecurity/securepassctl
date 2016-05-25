@@ -1,4 +1,4 @@
-package group
+package groupmember
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ import (
 func init() {
 	Command.Subcommands = append(Command.Subcommands,
 		cli.Command{
-	        Name:        "member",
+	        Name:        "check",
 	        Usage:       "test group membership",
 	        ArgsUsage:   "USERNAME GROUP",
 	        Description: "Check whether a SecurePass user belongs to a group.",
