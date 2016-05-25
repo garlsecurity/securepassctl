@@ -11,7 +11,7 @@ import (
 func init() {
 	Command.Subcommands = append(Command.Subcommands,
 		cli.Command{
-			Name:        "glist",
+			Name:        "list",
 			Usage:       "list SecurePass's groups",
 			ArgsUsage:   " ",
 			Description: "list SecurePass's groups.",
