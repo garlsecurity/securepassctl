@@ -17,7 +17,7 @@ func init() {
 			Description: "list SecurePass's groups.",
 			Action:      ActionGroupList,
 			Flags: []cli.Flag{
-				cli.StringFlag{
+				cli.BoolFlag{
 					Name:  "noheaders, H",
 					Usage: "Don't print headers",
 				},
