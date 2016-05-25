@@ -58,6 +58,12 @@ type GroupMemberResponse struct {
 	Response
 }
 
+// GroupListResponse encapsulates the list of users in a group
+type GroupListResponse struct {
+	Group []string
+	Response
+}
+
 // UserInfoResponse encapsulates the /api/v1/users/info HTTP response
 type UserInfoResponse struct {
 	UserDescriptor
