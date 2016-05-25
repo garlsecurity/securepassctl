@@ -25,10 +25,6 @@ func init() {
 					Name:  "realm, r",
 					Usage: "Set alternate realm",
 				},
-				cli.BoolFlag{
-					Name:  "details, d",
-					Usage: "Show more details",
-				},
 			},
 		})
 }
@@ -44,25 +40,11 @@ func ActionGroupList(c *cli.Context) {
 		log.Fatalf("error: %v", err)
 	}
 
-	if c.Bool("details") && !c.Bool("noheaders") {
-		log.Printf("%-35s %-35s %s\n", "USERNAME", "FULL NAME", "STATUS")
+	if !c.Bool("noheaders") {
+		log.Printf("%s\n", "USERNAME")
 	}
 
-	for _, user := range resp.Username {
-		if !c.Bool("details") {
-			fmt.Println(user)
-		} else {
-			r, e := service.Service.UserInfo(user)
-			if e != nil {
-				log.Fatalf("couldn't retrieve details for '%s': %s",
-					user, err)
-			}
-			status := "Active"
-			if !r.Enabled {
-				status = "Disabled"
-			}
-			fmt.Printf("%-35s %-35s %s\n", user, fmt.Sprintf("%s %s",
-				r.Name, r.Surname), status)
-		}
+	for _, user := range resp.Group {
+		fmt.Println(user)
 	}
 }
