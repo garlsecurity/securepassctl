@@ -41,6 +41,12 @@ type RadiusDescriptor struct {
 	Rfid   bool
 }
 
+// GroupDescriptor defines attributes of Group
+type GroupDescriptor struct {
+	Group       string
+	Description string
+}
+
 // LogEntry is a SecurePass application's log entry
 type LogEntry struct {
 	// SecurePass response is currently broken, this

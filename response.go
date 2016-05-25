@@ -64,6 +64,12 @@ type GroupListResponse struct {
 	Response
 }
 
+// GroupAddResponse encapsulates the /api/v1/users/add HTTP response
+type GroupAddResponse struct {
+	Group string
+	Response
+}
+
 // UserInfoResponse encapsulates the /api/v1/users/info HTTP response
 type UserInfoResponse struct {
 	UserDescriptor

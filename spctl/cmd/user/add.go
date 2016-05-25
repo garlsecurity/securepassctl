@@ -31,7 +31,7 @@ func init() {
 				},
 				cli.StringFlag{
 					Name:  "mobile, m",
-					Usage: "Group name (restriction)",
+					Usage: "Mobile number",
 				},
 				cli.StringFlag{
 					Name:  "nin",

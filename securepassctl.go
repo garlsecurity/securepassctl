@@ -269,6 +269,25 @@ func (s *SecurePass) GroupList(realm string) (*GroupListResponse, error) {
 	return &obj, err
 }
 
+// GroupAdd issues requests to /api/v1/groups/add
+func (s *SecurePass) GroupAdd(group *GroupDescriptor) (*GroupAddResponse, error) {
+	var obj GroupAddResponse
+
+	data := url.Values{}
+
+	// Compulsory fields
+	data.Set("GROUP", group.Group)
+	data.Set("DESCRIPTION", group.Description)
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/add", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+
 // UserInfo issues requests to /api/v1/users/info
 func (s *SecurePass) UserInfo(username string) (*UserInfoResponse, error) {
 	var obj UserInfoResponse
