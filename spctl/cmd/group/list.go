@@ -35,13 +35,13 @@ func ActionGroupList(c *cli.Context) {
 		log.Fatal("too many arguments")
 	}
 
-	resp, err := service.Service.UserList(c.String("realm"))
+	resp, err := service.Service.GroupList(c.String("realm"))
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
 
 	if !c.Bool("noheaders") {
-		log.Printf("%s\n", "USERNAME")
+		log.Printf("%s\n", "GROUP")
 	}
 
 	for _, user := range resp.Group {
