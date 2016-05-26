@@ -342,6 +342,25 @@ func (s *SecurePass) GroupMemberDel(username string, group string) (*Response, e
 	return &obj, err
 }
 
+// GroupMemberList issues requests to /api/v1/groups/member/list
+func (s *SecurePass) GroupMemberList(group string) (*GroupMemberListResponse, error) {
+	var obj GroupMemberListResponse
+
+	data := url.Values{}
+
+	// Compulsory fields
+	data.Set("GROUP", group)
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/members/list", &data)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 // UserInfo issues requests to /api/v1/users/info
 func (s *SecurePass) UserInfo(username string) (*UserInfoResponse, error) {
 	var obj UserInfoResponse
