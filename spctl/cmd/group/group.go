@@ -10,6 +10,6 @@ var Command = cli.Command{
 	ArgsUsage:   "",
 	Description: "Manage SecurePass groups.",
 	Subcommands: []cli.Command{
-			groupmember.Command,
-		},
+		member.Command,
+	},
 }
