@@ -287,7 +287,7 @@ func (s *SecurePass) GroupAdd(group *GroupDescriptor) (*GroupAddResponse, error)
 	return &obj, err
 }
 
-// UserDel deletes a user from SecurePass
+// GroupDel deletes a user from SecurePass
 func (s *SecurePass) GroupDel(group string) (*Response, error) {
 	var obj Response
 
@@ -302,6 +302,45 @@ func (s *SecurePass) GroupDel(group string) (*Response, error) {
 	return &obj, err
 }
 
+// GroupMemberAdd issues requests to /api/v1/groups/members/add
+func (s *SecurePass) GroupMemberAdd(username string, group string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+
+	// Compulsory fields
+	data.Set("GROUP", group)
+	data.Set("USERNAME", username)
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/members/add", &data)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// GroupMemberDel issues requests to /api/v1/groups/members/delete
+func (s *SecurePass) GroupMemberDel(username string, group string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+
+	// Compulsory fields
+	data.Set("GROUP", group)
+	data.Set("USERNAME", username)
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/members/delete", &data)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
 
 // UserInfo issues requests to /api/v1/users/info
 func (s *SecurePass) UserInfo(username string) (*UserInfoResponse, error) {
