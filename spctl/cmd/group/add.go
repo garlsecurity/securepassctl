@@ -35,10 +35,10 @@ func ActionAdd(c *cli.Context) {
 	if c.Bool("debug") {
 		log.Println("Adding group", group)
 	}
-	
+
 	_, err := service.Service.GroupAdd(&securepassctl.GroupDescriptor{
-		Group: 			group,
-		Description:    c.String("description"),
+		Group:       group,
+		Description: c.String("description"),
 	})
 
 	if err != nil {

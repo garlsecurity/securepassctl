@@ -34,16 +34,16 @@ func ActionDel(c *cli.Context) {
 	}
 
 	username := c.Args()[0]
-	group    := c.Args()[1]
+	group := c.Args()[1]
 
 	if !c.Bool("yes") {
 		var reply string
-		
+
 		fmt.Fprintf(os.Stderr, "Do you want to delete the user %q in group %q? [y/N] ", username, group)
 		fmt.Scanln(&reply)
 
 		reply = strings.ToLower(reply)
-		
+
 		if reply != "y" && reply != "yes" {
 			os.Exit(-1)
 		}

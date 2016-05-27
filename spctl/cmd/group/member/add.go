@@ -15,7 +15,7 @@ func init() {
 			ArgsUsage:   "USERNAME GROUP",
 			Description: "Add a user to a group.",
 			Action:      ActionAdd,
-			Flags: []cli.Flag{},
+			Flags:       []cli.Flag{},
 		})
 }
 
@@ -26,12 +26,12 @@ func ActionAdd(c *cli.Context) {
 	}
 
 	username := c.Args()[0]
-	group    := c.Args()[1]
+	group := c.Args()[1]
 
 	if c.Bool("debug") {
 		log.Printf("Adding user %s to group %s\n", username, group)
 	}
-	
+
 	_, err := service.Service.GroupMemberAdd(username, group)
 
 	if err != nil {

@@ -41,7 +41,7 @@ func LoadConfiguration(conffiles []string) error {
 			fp.Close()
 			cfg.Append(filename)
 		}
-		
+
 	}
 
 	defaultSection, err := cfg.GetSection("default")

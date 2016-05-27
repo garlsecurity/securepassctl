@@ -37,12 +37,12 @@ func ActionDel(c *cli.Context) {
 
 	if !c.Bool("yes") {
 		var reply string
-		
+
 		fmt.Fprintf(os.Stderr, "Do you want to delete the group %q? [y/N] ", group)
 		fmt.Scanln(&reply)
 
 		reply = strings.ToLower(reply)
-		
+
 		if reply != "y" && reply != "yes" {
 			os.Exit(-1)
 		}
