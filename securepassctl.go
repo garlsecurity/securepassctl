@@ -129,15 +129,15 @@ func (s *SecurePass) AppAdd(app *ApplicationDescriptor) (*AppAddResponse, error)
 	if app.AllowNetworkIPv4 != "" {
 		data.Set("ALLOW_NETWORK_IPv4", app.AllowNetworkIPv4)
 	}
-	
+
 	if app.AllowNetworkIPv6 != "" {
 		data.Set("ALLOW_NETWORK_IPv6", app.AllowNetworkIPv6)
 	}
-	
+
 	if app.Group != "" {
 		data.Set("GROUP", app.Group)
 	}
-	
+
 	if app.Realm != "" {
 		data.Set("REALM", app.Realm)
 	}
@@ -252,6 +252,115 @@ func (s *SecurePass) GroupMember(user, group string) (*GroupMemberResponse, erro
 	return &obj, err
 }
 
+// GroupList issues requests to /api/v1/groups/list
+func (s *SecurePass) GroupList(realm string) (*GroupListResponse, error) {
+	var obj GroupListResponse
+
+	data := url.Values{}
+	if realm != "" {
+		data.Set("REALM", realm)
+	}
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/list", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// GroupAdd issues requests to /api/v1/groups/add
+func (s *SecurePass) GroupAdd(group *GroupDescriptor) (*GroupAddResponse, error) {
+	var obj GroupAddResponse
+
+	data := url.Values{}
+
+	// Compulsory fields
+	data.Set("GROUP", group.Group)
+	data.Set("DESCRIPTION", group.Description)
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/add", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// GroupDel deletes a user from SecurePass
+func (s *SecurePass) GroupDel(group string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("GROUP", group)
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/delete", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// GroupMemberAdd issues requests to /api/v1/groups/members/add
+func (s *SecurePass) GroupMemberAdd(username string, group string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+
+	// Compulsory fields
+	data.Set("GROUP", group)
+	data.Set("USERNAME", username)
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/members/add", &data)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// GroupMemberDel issues requests to /api/v1/groups/members/delete
+func (s *SecurePass) GroupMemberDel(username string, group string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+
+	// Compulsory fields
+	data.Set("GROUP", group)
+	data.Set("USERNAME", username)
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/members/delete", &data)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// GroupMemberList issues requests to /api/v1/groups/member/list
+func (s *SecurePass) GroupMemberList(group string) (*GroupMemberListResponse, error) {
+	var obj GroupMemberListResponse
+
+	data := url.Values{}
+
+	// Compulsory fields
+	data.Set("GROUP", group)
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/members/list", &data)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 // UserInfo issues requests to /api/v1/users/info
 func (s *SecurePass) UserInfo(username string) (*UserInfoResponse, error) {
 	var obj UserInfoResponse
@@ -325,8 +434,8 @@ func (s *SecurePass) UserAdd(user *UserDescriptor) (*UserAddResponse, error) {
 
 	// Optional manager
 	if user.Manager != "" {
-	   data.Set("MANAGER", user.Manager)
-    }
+		data.Set("MANAGER", user.Manager)
+	}
 
 	req, err := s.NewRequest("POST", "/api/v1/users/add", &data)
 	if err != nil {

@@ -17,7 +17,7 @@ func init() {
 			Description: "List SecurePass's users.",
 			Action:      ActionList,
 			Flags: []cli.Flag{
-				cli.StringFlag{
+				cli.BoolFlag{
 					Name:  "noheaders, H",
 					Usage: "Don't print headers",
 				},

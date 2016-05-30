@@ -1,6 +1,7 @@
 package group
 
 import "github.com/codegangsta/cli"
+import "github.com/garlsecurity/securepassctl/spctl/cmd/group/member"
 
 // Command holds the user subcommands
 var Command = cli.Command{
@@ -8,5 +9,7 @@ var Command = cli.Command{
 	Usage:       "manage groups",
 	ArgsUsage:   "",
 	Description: "Manage SecurePass groups.",
-	Subcommands: []cli.Command{},
+	Subcommands: []cli.Command{
+		member.Command,
+	},
 }
