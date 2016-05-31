@@ -361,6 +361,55 @@ func (s *SecurePass) GroupMemberList(group string) (*GroupMemberListResponse, er
 	return &obj, err
 }
 
+// GroupXattrsDelete deletes an attribute from group's extended attributes
+func (s *SecurePass) GroupXattrsDelete(group, attribute string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("GROUP", group)
+	data.Set("ATTRIBUTE", attribute)
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/xattrs/delete", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// GroupXattrsList lists group's extended attributes
+func (s *SecurePass) GroupXattrsList(group string) (*XattrsListResponse, error) {
+	var obj XattrsListResponse
+
+	data := url.Values{}
+	data.Set("GROUP", group)
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/xattrs/list", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// RealmXattrsSet set realm's extended attributes
+func (s *SecurePass) GroupXattrsSet(group, attribute, value string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("GROUP", group)
+	data.Set("ATTRIBUTE", attribute)
+	data.Set("VALUE", value)
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/xattrs/set", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+
 // UserInfo issues requests to /api/v1/users/info
 func (s *SecurePass) UserInfo(username string) (*UserInfoResponse, error) {
 	var obj UserInfoResponse
