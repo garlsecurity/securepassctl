@@ -41,7 +41,8 @@ func ActionProvision(c *cli.Context) {
 	}
 
 	username := c.Args()[0]
-	token := c.String("token")
+	token    := c.String("token")
+	
 	if !tokenTypes[token] {
 		log.Fatalf("error: invalid token: '%s'", token)
 	}

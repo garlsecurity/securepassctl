@@ -57,6 +57,7 @@ func (s *SecurePass) NewRequest(method, path string, data *url.Values) (*http.Re
 		return nil, err
 	}
 	if data != nil {
+		DebugLogger.Printf("Data Payload is %s", data.Encode())
 		req, err = http.NewRequest(method, URL, bytes.NewBufferString(data.Encode()))
 	} else {
 		req, err = http.NewRequest(method, URL, nil)
