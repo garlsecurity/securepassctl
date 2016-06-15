@@ -510,6 +510,37 @@ func (s *SecurePass) UserDel(username string) (*Response, error) {
 	return &obj, err
 }
 
+// UserDisable disables a user
+func (s *SecurePass) UserDisable(username string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("USERNAME", username)
+
+	req, err := s.NewRequest("POST", "/api/v1/users/disable", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// UserEnable enables a user
+func (s *SecurePass) UserEnable(username string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("USERNAME", username)
+
+	req, err := s.NewRequest("POST", "/api/v1/users/enable", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+
 // UserPasswordChange change user password
 func (s *SecurePass) UserPasswordChange(username, password string) (*Response, error) {
 	var obj Response
