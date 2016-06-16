@@ -50,6 +50,6 @@ func ActionDisable(c *cli.Context) {
 		log.Fatalf("error: %v", err)
 	}
 
-	log.Printf("User %s deleted", username)
+	log.Printf("User %s disabled", username)
 
 }
