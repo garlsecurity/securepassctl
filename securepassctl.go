@@ -57,6 +57,7 @@ func (s *SecurePass) NewRequest(method, path string, data *url.Values) (*http.Re
 		return nil, err
 	}
 	if data != nil {
+		DebugLogger.Printf("Data Payload is %s", data.Encode())
 		req, err = http.NewRequest(method, URL, bytes.NewBufferString(data.Encode()))
 	} else {
 		req, err = http.NewRequest(method, URL, nil)
@@ -361,6 +362,55 @@ func (s *SecurePass) GroupMemberList(group string) (*GroupMemberListResponse, er
 	return &obj, err
 }
 
+// GroupXattrsDelete deletes an attribute from group's extended attributes
+func (s *SecurePass) GroupXattrsDelete(group, attribute string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("GROUP", group)
+	data.Set("ATTRIBUTE", attribute)
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/xattrs/delete", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// GroupXattrsList lists group's extended attributes
+func (s *SecurePass) GroupXattrsList(group string) (*XattrsListResponse, error) {
+	var obj XattrsListResponse
+
+	data := url.Values{}
+	data.Set("GROUP", group)
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/xattrs/list", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// RealmXattrsSet set realm's extended attributes
+func (s *SecurePass) GroupXattrsSet(group, attribute, value string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("GROUP", group)
+	data.Set("ATTRIBUTE", attribute)
+	data.Set("VALUE", value)
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/xattrs/set", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+
 // UserInfo issues requests to /api/v1/users/info
 func (s *SecurePass) UserInfo(username string) (*UserInfoResponse, error) {
 	var obj UserInfoResponse
@@ -459,6 +509,37 @@ func (s *SecurePass) UserDel(username string) (*Response, error) {
 	err = s.DoRequest(req, &obj, 200)
 	return &obj, err
 }
+
+// UserDisable disables a user
+func (s *SecurePass) UserDisable(username string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("USERNAME", username)
+
+	req, err := s.NewRequest("POST", "/api/v1/users/disable", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
+// UserEnable enables a user
+func (s *SecurePass) UserEnable(username string) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("USERNAME", username)
+
+	req, err := s.NewRequest("POST", "/api/v1/users/enable", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 
 // UserPasswordChange change user password
 func (s *SecurePass) UserPasswordChange(username, password string) (*Response, error) {
