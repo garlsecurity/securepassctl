@@ -30,11 +30,11 @@ var Command = cli.Command{
 		},
 		cli.StringFlag{
 			Name:  "start, s",
-			Usage: "Start date",
+			Usage: "Start date (YYYY-MM-DD)",
 		},
 		cli.StringFlag{
 			Name:  "end, e",
-			Usage: "End date",
+			Usage: "End date (YYYY-MM-DD)",
 		},
 		cli.StringFlag{
 			Name:  "realm, r",
@@ -51,15 +51,19 @@ func ActionLogs(c *cli.Context) {
 
 	resp, err := service.Service.Logs(c.String("realm"),
 		c.String("start"), c.String("end"))
+	
 	if err != nil {
 		log.Fatalf("error: %v", err)
 	}
 
 	records := []securepassctl.LogEntry{}
+	
 	for _, entry := range resp.Logs {
 		records = append(records, entry)
 	}
+	
 	sort.Sort(securepassctl.LogEntriesByTimestamp(records))
+
 	if !c.Bool("csv") {
 		for _, entry := range records {
 			fmt.Printf("%-19s %s\n", entry.Timestamp, entry.Message)
@@ -67,13 +71,17 @@ func ActionLogs(c *cli.Context) {
 	} else {
 		w := csv.NewWriter(os.Stdout)
 		defer w.Flush()
-		w.Write([]string{"timestamp", "uuid", "message", "realm", "app", "level"})
+
+		w.Write([]string{"uuid", "timestamp", "message", "realm", "app", "level"})
+
 		for _, entry := range records {
 			record := []string{entry.Timestamp, entry.UUID, entry.Message,
 				entry.Realm, entry.App, strconv.Itoa(entry.Level)}
+
 			if err := w.Write(record); err != nil {
 				log.Fatalln("error writing record to csv: ", err)
 			}
 		}
+
 	}
 }
