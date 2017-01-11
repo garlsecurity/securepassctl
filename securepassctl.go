@@ -495,6 +495,43 @@ func (s *SecurePass) UserAdd(user *UserDescriptor) (*UserAddResponse, error) {
 	return &obj, err
 }
 
+// Modify a user in SecurePass
+func (s *SecurePass) UserMod(username string, user *UserDescriptor) (*Response, error) {
+	var obj Response
+
+	data := url.Values{}
+	data.Set("USERNAME", user.Username)
+
+	if user.Name != "" {
+		data.Set("NAME", user.Name)
+	}
+	if user.Surname != "" {
+		data.Set("SURNAME", user.Surname)
+	}
+	if user.Email != "" {
+		data.Set("EMAIL", user.Email)
+	}
+	if user.Mobile != "" {
+		data.Set("MOBILE", user.Mobile)
+	}
+	if user.Nin != "" {
+		data.Set("NIN", user.Nin)
+	}
+	if user.Rfid != "" {
+		data.Set("RFID", user.Rfid)
+	}
+	if user.Manager != "" {
+		data.Set("MANAGER", user.Manager)
+	}
+
+	req, err := s.NewRequest("POST", "/api/v1/users/modify", &data)
+	if err != nil {
+		return nil, err
+	}
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 // UserDel deletes a user from SecurePass
 func (s *SecurePass) UserDel(username string) (*Response, error) {
 	var obj Response
@@ -637,6 +674,10 @@ func (s *SecurePass) UserXattrsSet(username, attribute, value string) (*Response
 	err = s.DoRequest(req, &obj, 200)
 	return &obj, err
 }
+
+/*
+ * Radius operations
+ */
 
 // RadiusAdd adds a RADIUS to SecurePass RADIUS
 func (s *SecurePass) RadiusAdd(radius *RadiusDescriptor) (*Response, error) {
