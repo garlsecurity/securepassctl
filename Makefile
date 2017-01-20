@@ -1,6 +1,6 @@
 NAME = spctl
 HARDWARE = $(shell uname -m)
-VERSION ?= 0.0.0
+VERSION ?= 0.1
 BUILD_TAG ?= dev
 BUILD_DIR ?= build
 
@@ -31,10 +31,13 @@ $(BUILD_DIR)/deps-stamp:
 	mkdir -p $(BUILD_DIR)
 	touch $@
 
-release: build
+release: all
 	rm -rf release && mkdir release
-	tar -zcf release/$(NAME)_$(VERSION)_linux_$(HARDWARE).tgz -C build/linux $(NAME)
-	tar -zcf release/$(NAME)_$(VERSION)_darwin_$(HARDWARE).tgz -C build/darwin $(NAME)
+	tar -zcf release/$(NAME)-$(VERSION)-linux.tgz -C build/linux/ amd64/$(NAME) 386/$(NAME)
+	tar -zcf release/$(NAME)-$(VERSION)-darwin.tgz -C build/darwin/ $(NAME)
+	mv build/windows/amd64/spctl  build/windows/spctl64.exe
+	mv build/windows/386/spctl  build/windows/spctl.exe
+	zip -r -j release/$(NAME)-$(VERSION)-win.zip build/windows/*exe
 	gh-release create garlsecurity/securepassctl $(VERSION) $(shell git rev-parse --abbrev-ref HEAD)
 
 test: deps
@@ -47,6 +50,7 @@ dist-clean: clean
 
 clean:
 	rm -rf $(BUILD_DIR)/*/ -rf
+	rm -rf release/*
 
 
 .PHONY: release deps clean test

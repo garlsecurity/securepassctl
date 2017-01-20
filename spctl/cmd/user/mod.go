@@ -57,7 +57,6 @@ func ActionMod(c *cli.Context) {
 	username := c.Args()[0]
 	securepassctl.DebugLogger.Printf("Modifying user %q", username)
 
-    
 	_, err := service.Service.UserMod(username, &securepassctl.UserDescriptor{
 			Username: username,
 		Name:     c.String("name"),
