@@ -88,7 +88,7 @@ Commands:
 	a.Usage = "Manage distributed identities."
 	a.Author = "Alessio Treglia"
 	a.Email = "alessio@debian.org"
-	a.Copyright = "Copyright © 2016 Alessio Treglia <alessio@debian.org>"
+	a.Copyright = "Copyright (c) 2016-2017 Alessio Treglia <alessio@debian.org> & Giuseppe Paterno' <gpaterno@gpaterno.com>"
 	a.Version = Version
 	a.Flags = []cli.Flag{
 		cli.BoolFlag{
