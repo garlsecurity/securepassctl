@@ -1,6 +1,6 @@
 package app
 
-import "github.com/codegangsta/cli"
+import "github.com/urfave/cli"
 
 // Command holds the app subcommands
 var Command = cli.Command{

@@ -1,6 +1,6 @@
 package user
 
-import "github.com/codegangsta/cli"
+import "github.com/urfave/cli"
 
 // Command holds the user subcommands
 var Command = cli.Command{

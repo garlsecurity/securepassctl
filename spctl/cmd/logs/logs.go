@@ -8,7 +8,7 @@ import (
 	"sort"
 	"strconv"
 
-	"github.com/codegangsta/cli"
+	"github.com/urfave/cli"
 	"github.com/garlsecurity/securepassctl"
 	"github.com/garlsecurity/securepassctl/spctl/service"
 )
