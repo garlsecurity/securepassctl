@@ -7,7 +7,7 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/codegangsta/cli"
+	"github.com/urfave/cli"
 	"github.com/garlsecurity/securepassctl/spctl/service"
 	"golang.org/x/crypto/ssh/terminal"
 )

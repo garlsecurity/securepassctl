@@ -1,6 +1,6 @@
 package group
 
-import "github.com/codegangsta/cli"
+import "github.com/urfave/cli"
 import "github.com/garlsecurity/securepassctl/spctl/cmd/group/member"
 
 // Command holds the user subcommands

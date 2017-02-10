@@ -1,6 +1,6 @@
 package realm
 
-import "github.com/codegangsta/cli"
+import "github.com/urfave/cli"
 
 // Command holds the realm subcommands
 var Command = cli.Command{

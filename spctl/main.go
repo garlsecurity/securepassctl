@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"github.com/codegangsta/cli"
+	"github.com/urfave/cli"
 	"github.com/garlsecurity/securepassctl"
 	"github.com/garlsecurity/securepassctl/spctl/cmd"
 	"github.com/garlsecurity/securepassctl/spctl/service"

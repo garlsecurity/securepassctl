@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/codegangsta/cli"
+	"github.com/urfave/cli"
 	"github.com/garlsecurity/securepassctl/spctl/cmd/app"
 	"github.com/garlsecurity/securepassctl/spctl/cmd/config"
 	"github.com/garlsecurity/securepassctl/spctl/cmd/group"

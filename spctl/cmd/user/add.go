@@ -3,7 +3,7 @@ package user
 import (
 	"log"
 
-	"github.com/codegangsta/cli"
+	"github.com/urfave/cli"
 	"github.com/garlsecurity/securepassctl"
 	"github.com/garlsecurity/securepassctl/spctl/service"
 )

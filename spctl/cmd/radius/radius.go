@@ -1,6 +1,6 @@
 package radius
 
-import "github.com/codegangsta/cli"
+import "github.com/urfave/cli"
 
 // Command holds the radius subcommands
 var Command = cli.Command{
