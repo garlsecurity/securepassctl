@@ -1,4 +1,4 @@
-%global commit      63fe64c471e7d76be96a625350468dfc65c06c31
+%global commit      d227bb8feba8b0030e463dc9ee4ccac78655a1ed
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Name:           securepass-tools
@@ -7,7 +7,9 @@ Release:        1%{?dist}
 Summary:        SecurePass Tools 
 License:        GPLv2+
 URL:            https://github.com/garlsecurity/securepassctl
-Source0:        https://github.com/garlsecurity/securepassctl/archive/v%{version}/securepass-tools-v%{version}.tar.gz  
+#Source0:        https://github.com/garlsecurity/securepassctl/archive/v%{version}/securepass-tools-v%{version}.tar.gz  
+Source0:        https://github.com/garlsecurity/securepassctl/archive/%{commit}/securepassctl-%{shortcommit}.tar.gz
+
 
 BuildRequires:  gcc
 BuildRequires:  golang >= 1.2-7

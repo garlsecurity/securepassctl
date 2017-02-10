@@ -29,6 +29,7 @@ deps: $(BUILD_DIR)/deps-stamp
 $(BUILD_DIR)/deps-stamp:
 	go get -u -v github.com/progrium/gh-release/...
 	go get -u -v github.com/golang/lint/golint
+	go get -u -v github.com/urfave/cli
 	go get -d -v ./... || true
 	mkdir -p $(BUILD_DIR)
 	touch $@
