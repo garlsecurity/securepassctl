@@ -25,3 +25,8 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+# Build
+build/*
+Vagrantfile
+*DS_Store*
