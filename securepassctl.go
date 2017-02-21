@@ -253,6 +253,22 @@ func (s *SecurePass) GroupMember(user, group string) (*GroupMemberResponse, erro
 	return &obj, err
 }
 
+// GroupList issues requests to /api/v1/groups/info
+func (s *SecurePass) GroupInfo(group string) (*GroupInfoResponse, error) {
+	var obj GroupInfoResponse
+
+	data := url.Values{}
+	data.Set("GROUP", group)
+
+	req, err := s.NewRequest("POST", "/api/v1/groups/info", &data)
+	if err != nil {
+		return nil, err
+	}
+
+	err = s.DoRequest(req, &obj, 200)
+	return &obj, err
+}
+
 // GroupList issues requests to /api/v1/groups/list
 func (s *SecurePass) GroupList(realm string) (*GroupListResponse, error) {
 	var obj GroupListResponse
@@ -409,7 +425,6 @@ func (s *SecurePass) GroupXattrsSet(group, attribute, value string) (*Response, 
 	err = s.DoRequest(req, &obj, 200)
 	return &obj, err
 }
-
 
 // UserInfo issues requests to /api/v1/users/info
 func (s *SecurePass) UserInfo(username string) (*UserInfoResponse, error) {
@@ -576,7 +591,6 @@ func (s *SecurePass) UserEnable(username string) (*Response, error) {
 	err = s.DoRequest(req, &obj, 200)
 	return &obj, err
 }
-
 
 // UserPasswordChange change user password
 func (s *SecurePass) UserPasswordChange(username, password string) (*Response, error) {

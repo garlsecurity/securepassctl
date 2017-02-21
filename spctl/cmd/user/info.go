@@ -5,8 +5,8 @@ import (
 	"os"
 	"text/template"
 
-	"github.com/urfave/cli"
 	"github.com/garlsecurity/securepassctl/spctl/service"
+	"github.com/urfave/cli"
 )
 
 func init() {
@@ -31,6 +31,7 @@ RFID tag................: {{.Rfid}}
 Token...................: {{.Token}}
 User status.............: {{.Enabled | boolToString}}
 Password status.........: {{.Password | boolToString}}
+Security level..........: {{.Seclevel | secToString}}
 `
 	if len(c.Args()) != 1 {
 		log.Fatal("error: must specify a username")
@@ -45,6 +46,14 @@ Password status.........: {{.Password | boolToString}}
 			return "Enabled"
 		}
 		return "Disabled"
+	}}).Funcs(template.FuncMap{"secToString": func(b string) string {
+		if b == "password" {
+			return "Password"
+		}
+		if b == "otppassword" {
+			return "OTP + Password"
+		}
+		return "OTP"
 	}}).Parse(templ))
 
 	if err := report.Execute(os.Stdout, resp); err != nil {
