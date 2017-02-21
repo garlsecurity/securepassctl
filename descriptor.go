@@ -22,6 +22,7 @@ type UserDescriptor struct {
 	Nin      string `json:"NIN"`
 	Rfid     string `json:"RFID"`
 	Manager  string `json:"MANAGER"`
+	Seclevel string `json:"SECLEVEL"`
 	Type     string
 	Password bool
 	Enabled  bool
@@ -43,8 +44,9 @@ type RadiusDescriptor struct {
 
 // GroupDescriptor defines attributes of Group
 type GroupDescriptor struct {
-	Group       string
-	Description string
+	Group       string `json:"GROUP"`
+	Description string `json:"DESCRIPTION"`
+	Realm       string `json:"REALM"`
 }
 
 // LogEntry is a SecurePass application's log entry

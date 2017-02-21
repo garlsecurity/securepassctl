@@ -58,6 +58,12 @@ type GroupMemberResponse struct {
 	Response
 }
 
+// GroupInfoResponse encapsulates the information of a group
+type GroupInfoResponse struct {
+	GroupDescriptor
+	Response
+}
+
 // GroupListResponse encapsulates the list of groups
 type GroupListResponse struct {
 	Group []string
