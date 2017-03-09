@@ -137,3 +137,16 @@ func expandUser(user string) string {
 	}
 	return user
 }
+
+func getUserSSHKey(user string) string {
+	resp, err := service.Service.UserXattrsList(user)
+	if err != nil {
+		log.Fatalf("error: %v", err)
+	}
+	for a, v := range *resp {
+		if a == "sshkey" {
+			return fmt.Sprintf("%s", v)
+		}
+	}
+	return ""
+}
