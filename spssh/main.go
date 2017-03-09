@@ -5,10 +5,11 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strconv"
 
-	"github.com/urfave/cli"
 	"github.com/garlsecurity/securepassctl"
 	"github.com/garlsecurity/securepassctl/spctl/service"
+	"github.com/urfave/cli"
 )
 
 var (
@@ -49,10 +50,29 @@ func loadConfiguration(userConfigFile string) error {
 }
 
 func main() {
-	//if b, e := strconv.ParseBool(GNUHelpStyle); e != nil || b {
+	if b, e := strconv.ParseBool(GNUHelpStyle); e != nil || b {
+		cli.AppHelpTemplate = `Usage: {{if .UsageText}}{{.UsageText}}{{else}}{{.HelpName}} {{if .Flags}}[global options]{{end}}{{if .Commands}} command [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}{{end}}
+{{.Usage}}
+  {{if .Flags}}
+  {{range .Flags}}{{.}}
+  {{end}}{{end}}{{if .Commands}}
+Commands:
+    {{range .Commands}}{{join .Names ", "}}{{ "\t" }}{{.Usage}}
+    {{end}}{{end}}
 
+More about SecurePass on http://www.secure-pass.net
+`
+		cli.CommandHelpTemplate = `Usage: {{.HelpName}}{{if .Flags}} [command options]{{end}} {{if .ArgsUsage}}{{.ArgsUsage}}{{else}}[arguments...]{{end}}
+{{.Usage}}
+  {{if .Flags}}
+  {{range .Flags}}{{.}}
+  {{end}}{{end}}{{if .Subcommands}}
+Commands:
+    {{range .Subcommands}}{{join .Names ", "}}{{ "\t" }}{{.Usage}}
+    {{end}}{{end}}
+`
+	}
 	a := cli.NewApp()
-
 	a.Name = "spssh"
 	a.Usage = "Get SSH keys"
 	a.Author = "Giuseppe Paterno'"
@@ -93,7 +113,7 @@ func main() {
 	a.Run(os.Args)
 }
 
-// Get user's ssh keys
+// ActionSSHKey run the actual command
 func ActionSSHKey(c *cli.Context) {
 	// Check that we have exactly one argument
 	if len(c.Args()) != 1 {
