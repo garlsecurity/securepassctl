@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 
 	"github.com/garlsecurity/securepassctl"
 	"github.com/garlsecurity/securepassctl/spctl/service"
@@ -124,4 +125,15 @@ func ActionSSHKey(c *cli.Context) {
 
 	log.Println("Username: ", username)
 
+}
+
+// Autoappend the realm and strip windows domain if necessary
+func expandUser(user string) string {
+	if service.SSHSettings.StripDomain && strings.Contains(user, "\\") {
+		user = strings.SplitN(user, "\\", 2)[1]
+	}
+	if !strings.Contains(user, "@") && len(service.NSSSettings.Realm) != 0 {
+		return fmt.Sprintf("%s@%s", user, service.NSSSettings.Realm)
+	}
+	return user
 }
