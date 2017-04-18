@@ -3,6 +3,7 @@ HARDWARE = $(shell uname -m)
 VERSION ?= 0.1
 BUILD_TAG ?= dev
 BUILD_DIR ?= build
+PATH := $(GOPATH)/bin:$(PATH)
 
 CWD := $(shell pwd)
 GOPATH ?= $(CWD)/GOPATH
